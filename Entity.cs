@@ -1,17 +1,23 @@
 using Object;
+using System.Numerics;
 
 namespace Entity
 {
-    class Entity : EObject
+    public class EEntity : EObject
     {
         public struct EntityInfo
         {
             public Image Sprite;
-            public int Size;
+            public Vector2 Size;
         }
-        public Entity()
+
+        public EntityInfo sInfo;
+        public Vector2 Position;
+
+        public EEntity()
         {
         
         }
+
     }
 }
