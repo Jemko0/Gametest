@@ -14,10 +14,9 @@ namespace Entity
         public EntityInfo sInfo;
         public Vector2 Position;
 
-        public EEntity()
+        public EEntity(Vector2 Pos, string EntityID)
         {
-        
+            Position = Pos;
         }
-
     }
 }

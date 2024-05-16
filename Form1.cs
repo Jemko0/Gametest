@@ -2,6 +2,7 @@ using Entity;
 using Microsoft.VisualBasic;
 using Object;
 using System.Diagnostics;
+using System.Numerics;
 using System.Security.Cryptography;
 using System.Timers;
 
@@ -17,9 +18,11 @@ namespace Gametest
             InitializeComponent();
             GameInit();
 
+            EEntity ent = new EEntity(new Vector2(0, 0), "lol");
+            CreateObject(ent);
             System.Windows.Forms.Timer tmr = new System.Windows.Forms.Timer();
             tmr.Interval = 1;   // milliseconds
-            tmr.Tick += Tmr_Tick; ;  // set handler
+            tmr.Tick += Tmr_Tick;
             tmr.Start();
         }
 
@@ -28,6 +31,7 @@ namespace Gametest
             GEUpdate();
         }
 
+        //GameEngine Update
         private void GEUpdate()
         {
             Render();
@@ -44,13 +48,15 @@ namespace Gametest
         {
             for(int i = 0; i < objs.Count; i++)
             {
-                var obj = objs[i];
+                EObject obj = objs[i];
                 if (obj.Rendering)
                 {
-                    var e = obj as EEntity;
-                    GameGraphics.DrawRectangle(GamePen, new Rectangle(e.Position.X, e.Position.Y, e.sInfo.Size.X));
+                    EEntity e = obj as EEntity;
+                    if(e != null)
+                    {
+                    GameGraphics.DrawRectangle(new Pen(Color.White), new Rectangle((int)e.Position.X, (int)e.Position.Y, (int)e.sInfo.Size.X, (int)e.sInfo.Size.Y));
+                    }
                 }
-                
             }
         }
 
@@ -59,7 +65,7 @@ namespace Gametest
             Random rnd = new Random();
             int num = rnd.Next(10000);
 
-            objs.Add(num ,NewObject);
+            objs.Add(num, NewObject);
             return num;
         }
 
