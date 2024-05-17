@@ -1,17 +1,20 @@
 using System.Data;
 using System.Numerics;
+using System.Runtime.Versioning;
 
-namespace Game.ID
+namespace Game
 {
     public class ID
     {
+        
         public partial class EntityID
         {
             public struct EntityDescription()
             { 
                 public string Name;
+                public bool InitActive;
                 public Vector2 HSize;
-                public Bitmap Sprite;
+                public Image Sprite;
             }
 
             public static EntityDescription GetEntity(string EntityID)
@@ -19,9 +22,16 @@ namespace Game.ID
                 EntityDescription e = new EntityDescription();
                 switch (EntityID)
                 {
-                    case "Base":
+                    case "base":
                         e.Name = "BaseEntity";
-                        e.HSize = new Vector2(20, 20);
+                        e.Sprite = null;
+                        e.HSize = new Vector2(350, 40);
+                        return e;
+
+                    case "player":
+                        e.Name = "Player";
+                        e.Sprite = Gametest.Properties.Resources.Entity;
+                        e.HSize = new Vector2(25, 50);
                         return e;
                 }
                 return e;

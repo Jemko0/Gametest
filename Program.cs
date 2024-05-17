@@ -1,3 +1,7 @@
+using Microsoft.VisualBasic.ApplicationServices;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+
 namespace Gametest
 {
     internal static class Program
@@ -12,6 +16,7 @@ namespace Gametest
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
+
         }
     }
 }

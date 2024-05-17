@@ -1,58 +1,45 @@
-using Entity;
+using Object.Entity;
+using Object.Entity.Character;
 using Object;
 using System.Numerics;
+using Entity;
+using Engine.Camera;
+using Engine;
 
 namespace Gametest
 {
     public partial class Form1 : Form
     {
         //globals
-        private static Dictionary<int, EObject> objs = new Dictionary<int, EObject>();
-
+        public static Dictionary<int, EObject> objs = new Dictionary<int, EObject>();
+        public EPlayer player;
+        public Camera cam;
         public Form1()
         {
             InitializeComponent();
             GameInit();
-            var objec = new EEntity(new Vector2(10, 10), "Base");
-            var objec1 = new EEntity(new Vector2(160, 25), "Base");
-            var objec2 = new EEntity(new Vector2(310, 10), "Base");
-            var objec3 = new EEntity(new Vector2(80, 60), "Base");
-            System.Windows.Forms.Timer tmr = new System.Windows.Forms.Timer();
-            tmr.Interval = 1;   // milliseconds
-            tmr.Tick += Tmr_Tick;
-            tmr.Start();
+
+            var objec = new ECharacter();
+            objec.InitializeEntity(new Vector2(380, 600), "base");
+            cam = new Camera();
+            CreatePlayer();
+            cam.trackedEntity = player;
+            Application.Idle += HandleApplicationIdle;
         }
 
-        private void Tmr_Tick(object? sender, EventArgs e)
+        void HandleApplicationIdle(object sender, EventArgs e)
         {
-            GEUpdate();
-        }
-
-        //GameEngine Update
-        private void GEUpdate()
-        {
-            Render();
-        }
-
-        private void Render()
-        {
-            //CLEAR SCREEN
-            GameGraphics.Clear(Color.White);
-            EntityPass();
-        }
-
-        private void EntityPass()
-        {
-            for(int i = 0; i < objs.Count; i++)
+            while (IsApplicationIdle())
             {
-                EObject obj = objs.ElementAt(i).Value;
-
-                if (obj.Rendering)
-                {
-                    EEntity e = obj as EEntity;
-                    GameGraphics.FillRectangle(new SolidBrush(Color.Aqua), new Rectangle((int)e.Position.X, (int)e.Position.Y, (int)e.EDescription.HSize.X, (int)e.EDescription.HSize.Y));
-                }
+                cam.Update();
+                Invalidate();
             }
+        }
+
+        bool IsApplicationIdle()
+        {
+            EngineWin32.NativeMessage result;
+            return EngineWin32.PeekMessage(out result, IntPtr.Zero, (uint)0, (uint)0, (uint)0) == 0;
         }
 
         public static int RegisterObject(EObject NewObject)
@@ -67,6 +54,77 @@ namespace Gametest
         public static void DestroyObject(int ObjectID)
         {
             objs.Remove(ObjectID);
+        }
+
+
+        public void CreatePlayer()
+        {
+            player = new EPlayer();
+            RegisterObject(player);
+        }
+
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            OnMapUpdated();
+            for (int i = 0; i < objs.Count; i++)
+            {
+                EObject obj = objs.ElementAt(i).Value;
+
+                if (obj.Rendering)
+                {
+                    EEntity en = obj as EEntity;
+                    if (en != null && en.active)
+                    {
+                        if (en.EDescription.Sprite != null)
+                        {
+                            e.Graphics.DrawImage(en.EDescription.Sprite, new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
+                            return;
+                        }
+
+                        e.Graphics.FillRectangle(new SolidBrush(Color.Black), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
+                        e.Graphics.FillEllipse(new SolidBrush(Color.Red), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam)), new SizeF(10, 10)));
+                        
+                        //e.Graphics.FillRectangle(new SolidBrush(Color.Aqua), new RectangleF(((int)en.Position.X) - (int)cam.position.X, ((int)en.Position.Y) - (int)cam.position.Y, (int)en.EDescription.HSize.X, (int)en.EDescription.HSize.Y));
+                    }
+                }
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.DoubleBuffered = true;
+
+            //FPS Counter
+            System.Windows.Forms.Timer FPSTimer = new System.Windows.Forms.Timer();
+            FPSTimer.Interval = 500;
+            FPSTimer.Start();
+            FPSTimer.Tick += UpdateFPS;
+        }
+
+      
+
+        DateTime _lastCheckTime = DateTime.Now;
+        long _frameCount = 0;
+
+        // called whenever a map is updated
+        void OnMapUpdated()
+        {
+            Interlocked.Increment(ref _frameCount);
+        }
+
+        // called every once in a while
+        double GetFps()
+        {
+            double secondsElapsed = (DateTime.Now - _lastCheckTime).TotalSeconds;
+            long count = Interlocked.Exchange(ref _frameCount, 0);
+            double fps = count / secondsElapsed;
+            _lastCheckTime = DateTime.Now;
+            return fps;
+        }
+
+        private void UpdateFPS(object? sender, EventArgs e)
+        {
+            label1.Text = GetFps().ToString();
         }
     }
 }

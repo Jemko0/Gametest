@@ -1,4 +1,4 @@
-using Game;
+using Game.Global.var;
 using Gametest;
 
 namespace Object
@@ -13,11 +13,19 @@ namespace Object
             OBJID = Form1.RegisterObject(this);
             System.Windows.Forms.Timer Update = new System.Windows.Forms.Timer();
             Update.Interval = GameProperties.ms_tickrate;
-            Update.Tick += Tick;
+            Update.Tick += FixedTick;
+            Update.Start();
+
+            Init();
             return;
         }
 
-        public virtual void Tick(object? sender, EventArgs e)
+        public virtual void Init()
+        {
+            return;
+        }
+
+        public virtual void FixedTick(object? sender, EventArgs e)
         {
             return;
         }
