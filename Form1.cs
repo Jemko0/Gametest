@@ -31,6 +31,7 @@ namespace Gametest
         {
             while (IsApplicationIdle())
             {
+                OnMapUpdated();
                 cam.Update();
                 Invalidate();
             }
@@ -65,7 +66,7 @@ namespace Gametest
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            OnMapUpdated();
+            
             for (int i = 0; i < objs.Count; i++)
             {
                 EObject obj = objs.ElementAt(i).Value;
