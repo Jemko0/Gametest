@@ -44,7 +44,12 @@ namespace Engine
 
         public static float Lerp(float a, float b, float f)
         {
-            return (a * (1.0f - f)) + (b * f);
+            float min;
+            float max;
+
+            min = Math.Min(a, b);
+            max = Math.Max(a, b);
+            return Math.Clamp((a * (1.0f - f)) + (b * f), min, max);
         }
     }
 }

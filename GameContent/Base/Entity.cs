@@ -11,6 +11,7 @@ namespace Object.Entity
         public Game.ID.EntityID.EntityDescription EDescription;
         public Vector2 Position;
         public Vector2 velocity;
+        public bool collidable = true;
         public EEntity()
         {
             active = true;
@@ -23,42 +24,42 @@ namespace Object.Entity
             Position = Pos;
         }
 
-        public override void FixedTick(object? sender, EventArgs e)
+        public override void Tick(double delta)
         {
-            base.FixedTick(sender, e);
-
-            //default move for entities
             Position.X += velocity.X;
             Position.Y += velocity.Y;
+            base.Tick(delta);
         }
-
         public virtual EngineStructs.ECollisionResult CheckCollisions()
         {
-            EngineStructs.ECollisionResult result = new EngineStructs.ECollisionResult();
+            EngineStructs.ECollisionResult e = Collision();
+            return e;
+        }
 
+        public EngineStructs.ECollisionResult Collision()
+        {
+            EngineStructs.ECollisionResult cr = new EngineStructs.ECollisionResult();
             for (int i = 0; i < Form1.objs.Count; i++)
             {
                 EObject obj = Form1.objs.ElementAt(i).Value;
-                EEntity e = obj as EEntity;
-
-                    if(e.active && e != this)
+                {
+                    EEntity e = obj as EEntity;
+                    if (e != this && e.collidable)
                     {
-                        if (e.Position.X < Position.X + EDescription.HSize.X &&
-                            e.Position.X + e.EDescription.HSize.X > Position.X &&
-
-                            e.Position.Y < Position.Y + EDescription.HSize.Y &&
-                            e.Position.Y + e.EDescription.HSize.Y > Position.Y
+                        if (Position.Y + EDescription.HSize.Y > e.Position.Y
+                            && Position.Y < e.Position.Y + e.EDescription.HSize.Y
+                            && Position.X + EDescription.HSize.X > e.Position.X
+                            && Position.X < e.Position.X + e.EDescription.HSize.X
                             )
                         {
-                            //Collision Detected
-                            result.collision = true;
-                            result.hitobject = obj;
-
-                            return result;
+                            cr.collision = true;
+                            return cr;
                         }
+                        
                     }
+                }
             }
-            return result;
+            return cr;
         }
     }
 }

@@ -25,6 +25,11 @@ namespace Object
             return;
         }
 
+        public virtual void Tick(double delta)
+        {
+            return;
+        }
+
         public virtual void FixedTick(object? sender, EventArgs e)
         {
             return;

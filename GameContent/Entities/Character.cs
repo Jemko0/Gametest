@@ -10,39 +10,62 @@ namespace Object.Entity.Character
     /// </summary>
     public class ECharacter : EEntity
     {
-        public float accel = 0.5f;
-        public float speed = 1f;
+        public float accel = 60f;
+        public float speed = 100f;
+        public bool grounded = false;
+        public float gravity = 15f;
         public ECharacter()
         {
             return;
         }
 
-        public void AddMovementInput(float lr_input)
+        public override void Tick(double delta)
         {
-            Move(lr_input);
+            base.Tick(delta);
         }
 
-        private void Move(float input)
+        public void AddMovementInput(float lr_input)
         {
-            if(input == 0)
-            {
-                velocity.X /= 1.2f;
+            Move(lr_input, 0);
+        }
+
+        private void Move(float inputX, float inputY)
+        {
+            grounded = false;
+            
+            velocity.X += (accel * inputX) * (float)Form1.delta;
+            velocity.X = Math.Clamp(velocity.X, -speed, speed);
+            if (inputX == 0)
+            { 
+                velocity.X *= 0.9f;
             }
-
-
-            velocity.Y += 0.1f;
-
+            
             EngineStructs.ECollisionResult collisionResult = CheckCollisions();
-            if (collisionResult.collision)
+
+            Form1.debugtxt = ";";
+            if (!collisionResult.collision)
             {
-                EEntity e = collisionResult.hitobject as EEntity;
-                Position.Y = e.Position.Y - e.EDescription.HSize.Y;
-                velocity.Y = 0;
+                velocity.Y += gravity * (float)Form1.delta;
+                return;
+
             }
+            else
+            {
+                if (collisionResult.collision)
+                {
+                    grounded = true;
+                    velocity.Y = 0;
+                }
+            }
+        }
 
-            velocity.X += accel * input;
-
-
+        public void Jump()
+        {
+            if(grounded)
+            { 
+                velocity.Y = -900 * (float)Form1.delta;
+            }
+            
         }
     }
 }

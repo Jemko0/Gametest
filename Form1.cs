@@ -5,6 +5,7 @@ using System.Numerics;
 using Entity;
 using Engine.Camera;
 using Engine;
+using System.Diagnostics;
 
 namespace Gametest
 {
@@ -18,23 +19,56 @@ namespace Gametest
         {
             InitializeComponent();
             GameInit();
-
-            var objec = new ECharacter();
-            objec.InitializeEntity(new Vector2(380, 600), "base");
+            CreateLevel();
             cam = new Camera();
             CreatePlayer();
             cam.trackedEntity = player;
             Application.Idle += HandleApplicationIdle;
         }
 
+        public void CreateLevel()
+        {
+            var o = new EEntity();
+            o.InitializeEntity(new Vector2(400, 500), "base");
+
+            var o1 = new EEntity();
+            o1.InitializeEntity(new Vector2(700, 600), "base");
+
+            var o2 = new EEntity();
+            o2.InitializeEntity(new Vector2(1000, 550), "base");
+
+            var o3 = new EEntity();
+            o3.InitializeEntity(new Vector2(1400, 500), "base");
+
+            var o4 = new EEntity();
+            o4.InitializeEntity(new Vector2(1800, 500), "base");
+
+            var o5 = new EEntity();
+            o5.InitializeEntity(new Vector2(2200, 600), "base");
+        }
+
+        //ENGINE UPDATE LOOP
+        public static string debugtxt;
+        public static Double delta;
         void HandleApplicationIdle(object sender, EventArgs e)
         {
+            DateTime startTime, endTime;
+            startTime = DateTime.Now;
+
             while (IsApplicationIdle())
             {
                 OnMapUpdated();
                 cam.Update();
                 Invalidate();
+                Thread.Sleep(1);
+                label2.Text = debugtxt;
             }
+
+            endTime = DateTime.Now;
+            Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
+            delta = elapsedMillisecs / 1000;
+
+            label1.Text = Math.Floor(1/delta).ToString();
         }
 
         bool IsApplicationIdle()
@@ -73,6 +107,7 @@ namespace Gametest
 
                 if (obj.Rendering)
                 {
+                    obj.Tick(delta);
                     EEntity en = obj as EEntity;
                     if (en != null && en.active)
                     {
@@ -125,7 +160,7 @@ namespace Gametest
 
         private void UpdateFPS(object? sender, EventArgs e)
         {
-            label1.Text = GetFps().ToString();
+            //label1.Text = GetFps().ToString();
         }
     }
 }

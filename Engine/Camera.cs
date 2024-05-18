@@ -19,8 +19,8 @@ namespace Engine.Camera
         {
             if (trackedEntity != null)
             {
-                position.X = EngineFunctions.Lerp(position.X, trackedEntity.Position.X, 0.02f);
-                position.Y = EngineFunctions.Lerp(position.Y, trackedEntity.Position.Y, 0.02f);
+                position.X = EngineFunctions.Lerp(position.X, trackedEntity.Position.X,  8f * (float)Form1.delta);
+                position.Y = EngineFunctions.Lerp(position.Y, trackedEntity.Position.Y, 8f * (float)Form1.delta);
             }
         }
     }
