@@ -35,6 +35,8 @@ namespace Object.Entity.Character
             EngineStructs.ECollisionResult collisionResult = CheckCollisions();
             if (collisionResult.collision)
             {
+                EEntity e = collisionResult.hitobject as EEntity;
+                Position.Y = e.Position.Y - e.EDescription.HSize.Y;
                 velocity.Y = 0;
             }
 
