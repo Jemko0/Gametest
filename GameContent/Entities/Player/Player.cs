@@ -1,3 +1,4 @@
+using Engine;
 using Game.Global;
 using Gametest;
 using Object.Entity.Character;
@@ -15,6 +16,7 @@ namespace Entity
         public override void FixedTick(object? sender, EventArgs e)
         {
            base.FixedTick(sender, e);
+           
            AddMovementInput(0);
 
            if(InputManager.IsKeyDown(Keys.A) == true)
@@ -26,7 +28,10 @@ namespace Entity
            {
                 AddMovementInput(1);
            }
-
+            if (InputManager.IsKeyDown(Keys.Space) == true)
+            {
+                Jump();
+            }
         }
     }
 }

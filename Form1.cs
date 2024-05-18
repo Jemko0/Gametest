@@ -5,6 +5,7 @@ using System.Numerics;
 using Entity;
 using Engine.Camera;
 using Engine;
+using System.Diagnostics;
 
 namespace Gametest
 {
@@ -21,20 +22,40 @@ namespace Gametest
 
             var objec = new ECharacter();
             objec.InitializeEntity(new Vector2(380, 600), "base");
+
+            var objec1 = new ECharacter();
+            objec1.InitializeEntity(new Vector2(580, 300), "wall");
+
+            //var objec1 = new ECharacter();
+            //objec1.InitializeEntity(new Vector2(950, 700), "base");
             cam = new Camera();
             CreatePlayer();
             cam.trackedEntity = player;
             Application.Idle += HandleApplicationIdle;
         }
 
+
+        //ENGINE UPDATE LOOP
+        public static string debugtxt;
+        public Double delta;
         void HandleApplicationIdle(object sender, EventArgs e)
         {
+            DateTime startTime, endTime;
+            startTime = DateTime.Now;
+
             while (IsApplicationIdle())
             {
                 OnMapUpdated();
                 cam.Update();
                 Invalidate();
+                label2.Text = debugtxt;
             }
+
+            endTime = DateTime.Now;
+            Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
+            delta = elapsedMillisecs;
+
+            label1.Text = (delta * 100).ToString();
         }
 
         bool IsApplicationIdle()
@@ -73,6 +94,7 @@ namespace Gametest
 
                 if (obj.Rendering)
                 {
+                    obj.Tick(delta);
                     EEntity en = obj as EEntity;
                     if (en != null && en.active)
                     {
@@ -125,7 +147,7 @@ namespace Gametest
 
         private void UpdateFPS(object? sender, EventArgs e)
         {
-            label1.Text = GetFps().ToString();
+            //label1.Text = GetFps().ToString();
         }
     }
 }

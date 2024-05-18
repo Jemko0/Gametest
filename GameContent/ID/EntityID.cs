@@ -28,6 +28,12 @@ namespace Game
                         e.HSize = new Vector2(350, 40);
                         return e;
 
+                    case "wall":
+                        e.Name = "Wall";
+                        e.Sprite = null;
+                        e.HSize = new Vector2(40, 350);
+                        return e;
+
                     case "player":
                         e.Name = "Player";
                         e.Sprite = Gametest.Properties.Resources.Entity;

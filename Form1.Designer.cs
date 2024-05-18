@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             label1 = new Label();
+            label2 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -42,11 +43,23 @@
             label1.TabIndex = 0;
             label1.Text = "label1";
             // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            label2.AutoSize = true;
+            label2.Location = new Point(51, 46);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(59, 25);
+            label2.TabIndex = 1;
+            label2.Text = "label2";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1142, 690);
+            Controls.Add(label2);
             Controls.Add(label1);
             Margin = new Padding(4);
             Name = "Form1";
@@ -73,5 +86,6 @@
 
         private Label label1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private Label label2;
     }
 }

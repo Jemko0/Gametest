@@ -28,6 +28,9 @@ namespace Engine
         public struct ECollisionResult()
         {
             public bool collision = false;
+            public float collisiontime;
+            public float normalx;
+            public float normaly;
             public EObject hitobject = null;
         }
     }
