@@ -47,6 +47,7 @@ namespace Object.Entity.Character
             {
                 velocity.Y += gravity * (float)Form1.delta;
                 return;
+
             }
             else
             {
