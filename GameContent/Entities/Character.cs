@@ -10,10 +10,10 @@ namespace Object.Entity.Character
     /// </summary>
     public class ECharacter : EEntity
     {
-        public float accel = 3f;
-        public float speed = 1f;
+        public float accel = 60f;
+        public float speed = 100f;
         public bool grounded = false;
-        public float gravity = 2f;
+        public float gravity = 15f;
         public ECharacter()
         {
             return;
@@ -22,7 +22,6 @@ namespace Object.Entity.Character
         public override void Tick(double delta)
         {
             base.Tick(delta);
-            EngineStructs.ECollisionResult collisionResult = CheckCollisions();
         }
 
         public void AddMovementInput(float lr_input)
@@ -33,21 +32,37 @@ namespace Object.Entity.Character
         private void Move(float inputX, float inputY)
         {
             grounded = false;
-            velocity.Y += gravity;
-            velocity.X = accel * inputX;
-
-            if (true)
-            {
-                grounded = true;
+            
+            velocity.X += (accel * inputX) * (float)Form1.delta;
+            velocity.X = Math.Clamp(velocity.X, -speed, speed);
+            if (inputX == 0)
+            { 
+                velocity.X *= 0.9f;
             }
             
+            EngineStructs.ECollisionResult collisionResult = CheckCollisions();
+
+            Form1.debugtxt = ";";
+            if (!collisionResult.collision)
+            {
+                velocity.Y += gravity * (float)Form1.delta;
+                return;
+            }
+            else
+            {
+                if (collisionResult.collision)
+                {
+                    grounded = true;
+                    velocity.Y = 0;
+                }
+            }
         }
 
         public void Jump()
         {
             if(grounded)
             { 
-                velocity.Y = -9;
+                velocity.Y = -8;
             }
             
         }

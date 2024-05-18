@@ -11,26 +11,34 @@ namespace Entity
         public EPlayer()
         {
         InitializeEntity(new System.Numerics.Vector2(400,400), "player");
+            collidable = false;
         }
 
-        public override void FixedTick(object? sender, EventArgs e)
+        public override void Tick(double delta)
         {
-           base.FixedTick(sender, e);
-           
-           AddMovementInput(0);
+            base.Tick(delta);
 
-           if(InputManager.IsKeyDown(Keys.A) == true)
-           {
+
+
+            AddMovementInput(0);
+            if (InputManager.IsKeyDown(Keys.A) == true)
+            {
 
                 AddMovementInput(-1);
-           }
-           if (InputManager.IsKeyDown(Keys.D) == true)
-           {
+            }
+            if (InputManager.IsKeyDown(Keys.D) == true)
+            {
                 AddMovementInput(1);
-           }
+            }
             if (InputManager.IsKeyDown(Keys.Space) == true)
             {
                 Jump();
+            }
+
+            if(Position.Y > 1000)
+            {
+                velocity.Y = 0;
+                Position = new System.Numerics.Vector2(400, 400);
             }
         }
     }

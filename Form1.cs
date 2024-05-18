@@ -19,25 +19,37 @@ namespace Gametest
         {
             InitializeComponent();
             GameInit();
-
-            var objec = new ECharacter();
-            objec.InitializeEntity(new Vector2(380, 600), "base");
-
-            var objec1 = new ECharacter();
-            objec1.InitializeEntity(new Vector2(580, 300), "wall");
-
-            //var objec1 = new ECharacter();
-            //objec1.InitializeEntity(new Vector2(950, 700), "base");
+            CreateLevel();
             cam = new Camera();
             CreatePlayer();
             cam.trackedEntity = player;
             Application.Idle += HandleApplicationIdle;
         }
 
+        public void CreateLevel()
+        {
+            var o = new EEntity();
+            o.InitializeEntity(new Vector2(400, 500), "base");
+
+            var o1 = new EEntity();
+            o1.InitializeEntity(new Vector2(700, 600), "base");
+
+            var o2 = new EEntity();
+            o2.InitializeEntity(new Vector2(1000, 550), "base");
+
+            var o3 = new EEntity();
+            o3.InitializeEntity(new Vector2(1400, 500), "base");
+
+            var o4 = new EEntity();
+            o4.InitializeEntity(new Vector2(1800, 500), "base");
+
+            var o5 = new EEntity();
+            o5.InitializeEntity(new Vector2(2200, 600), "base");
+        }
 
         //ENGINE UPDATE LOOP
         public static string debugtxt;
-        public Double delta;
+        public static Double delta;
         void HandleApplicationIdle(object sender, EventArgs e)
         {
             DateTime startTime, endTime;
@@ -48,14 +60,15 @@ namespace Gametest
                 OnMapUpdated();
                 cam.Update();
                 Invalidate();
+                Thread.Sleep(1);
                 label2.Text = debugtxt;
             }
 
             endTime = DateTime.Now;
             Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
-            delta = elapsedMillisecs;
+            delta = elapsedMillisecs / 1000;
 
-            label1.Text = (delta * 100).ToString();
+            label1.Text = (delta).ToString();
         }
 
         bool IsApplicationIdle()

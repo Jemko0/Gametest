@@ -28,9 +28,10 @@ namespace Engine
         public struct ECollisionResult()
         {
             public bool collision = false;
-            public float collisiontime;
-            public float normalx;
-            public float normaly;
+            public bool L;
+            public bool R;
+            public bool T;
+            public bool B;
             public EObject hitobject = null;
         }
     }
@@ -47,7 +48,12 @@ namespace Engine
 
         public static float Lerp(float a, float b, float f)
         {
-            return (a * (1.0f - f)) + (b * f);
+            float min;
+            float max;
+
+            min = Math.Min(a, b);
+            max = Math.Max(a, b);
+            return Math.Clamp((a * (1.0f - f)) + (b * f), min, max);
         }
     }
 }
