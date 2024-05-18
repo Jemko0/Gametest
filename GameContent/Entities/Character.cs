@@ -62,7 +62,7 @@ namespace Object.Entity.Character
         {
             if(grounded)
             { 
-                velocity.Y = -8;
+                velocity.Y = -900 * (float)Form1.delta;
             }
             
         }

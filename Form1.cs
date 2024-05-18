@@ -68,7 +68,7 @@ namespace Gametest
             Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
             delta = elapsedMillisecs / 1000;
 
-            label1.Text = (delta).ToString();
+            label1.Text = Math.Floor(1/delta).ToString();
         }
 
         bool IsApplicationIdle()
