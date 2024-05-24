@@ -49,7 +49,7 @@ namespace Gametest
 
         //ENGINE UPDATE LOOP
         public static string debugtxt;
-        public static Double delta;
+        public static float delta;
         void HandleApplicationIdle(object sender, EventArgs e)
         {
             DateTime startTime, endTime;
@@ -57,18 +57,15 @@ namespace Gametest
 
             while (IsApplicationIdle())
             {
-                OnMapUpdated();
                 cam.Update();
                 Invalidate();
-                Thread.Sleep(1);
-                label2.Text = debugtxt;
             }
 
             endTime = DateTime.Now;
-            Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
-            delta = elapsedMillisecs / 1000;
+            float elapsedMillisecs = (float)((TimeSpan)(endTime - startTime)).TotalMilliseconds;
+            delta = (float)elapsedMillisecs;
 
-            label1.Text = Math.Floor(1/delta).ToString();
+            label1.Text = "FPS: " + Math.Floor(1/delta).ToString() + "\n" + "DELTA: " + delta.ToString();
         }
 
         bool IsApplicationIdle()
@@ -107,7 +104,9 @@ namespace Gametest
 
                 if (obj.Rendering)
                 {
+                    //Tick Object
                     obj.Tick(delta);
+
                     EEntity en = obj as EEntity;
                     if (en != null && en.active)
                     {

@@ -19,7 +19,7 @@ namespace Object.Entity.Character
             return;
         }
 
-        public override void Tick(double delta)
+        public override void Tick(float delta)
         {
             base.Tick(delta);
         }
@@ -32,20 +32,20 @@ namespace Object.Entity.Character
         private void Move(float inputX, float inputY)
         {
             grounded = false;
-            
-            velocity.X += (accel * inputX) * (float)Form1.delta;
+
+            velocity.X += (accel * inputX);
             velocity.X = Math.Clamp(velocity.X, -speed, speed);
+
             if (inputX == 0)
-            { 
-                velocity.X *= 0.9f;
+            {
+                velocity.X *= 0.9f * odelta;
             }
-            
+
             EngineStructs.ECollisionResult collisionResult = CheckCollisions();
 
-            Form1.debugtxt = ";";
             if (!collisionResult.collision)
             {
-                velocity.Y += gravity * (float)Form1.delta;
+                velocity.Y += gravity * odelta;
                 return;
 
             }
@@ -63,7 +63,7 @@ namespace Object.Entity.Character
         {
             if(grounded)
             { 
-                velocity.Y = -900 * (float)Form1.delta;
+                velocity.Y = -6;
             }
             
         }

@@ -14,7 +14,7 @@ namespace Entity
             collidable = false;
         }
 
-        public override void Tick(double delta)
+        public override void Tick(float delta)
         {
             base.Tick(delta);
 

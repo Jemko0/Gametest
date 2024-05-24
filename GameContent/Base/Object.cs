@@ -6,6 +6,7 @@ namespace Object
     public class EObject
     {
         public int OBJID;
+        public float odelta;
         public bool Rendering;
 
         public EObject()
@@ -25,8 +26,9 @@ namespace Object
             return;
         }
 
-        public virtual void Tick(double delta)
+        public virtual void Tick(float delta)
         {
+            odelta = delta;
             return;
         }
 
