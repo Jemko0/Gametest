@@ -16,6 +16,7 @@ namespace Object.Entity
         {
             active = true;
             Rendering = true;
+            ticking = true;
         }
 
         public void InitializeEntity(Vector2 Pos, string EntityID)
@@ -24,11 +25,11 @@ namespace Object.Entity
             Position = Pos;
         }
 
-        public override void Tick(double delta)
+        public override void Tick(float delta)
         {
-            Position.X += velocity.X;
-            Position.Y += velocity.Y;
             base.Tick(delta);
+            Position.X += velocity.X * delta;
+            Position.Y += velocity.Y * delta;
         }
         public virtual EngineStructs.ECollisionResult CheckCollisions()
         {

@@ -7,7 +7,7 @@ namespace Object
     {
         public int OBJID;
         public bool Rendering;
-
+        public bool ticking;
         public EObject()
         {
             OBJID = Form1.RegisterObject(this);
@@ -25,7 +25,7 @@ namespace Object
             return;
         }
 
-        public virtual void Tick(double delta)
+        public virtual void Tick(float delta)
         {
             return;
         }

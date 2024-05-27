@@ -30,26 +30,11 @@ namespace Gametest
         {
             var o = new EEntity();
             o.InitializeEntity(new Vector2(400, 500), "base");
-
-            var o1 = new EEntity();
-            o1.InitializeEntity(new Vector2(700, 600), "base");
-
-            var o2 = new EEntity();
-            o2.InitializeEntity(new Vector2(1000, 550), "base");
-
-            var o3 = new EEntity();
-            o3.InitializeEntity(new Vector2(1400, 500), "base");
-
-            var o4 = new EEntity();
-            o4.InitializeEntity(new Vector2(1800, 500), "base");
-
-            var o5 = new EEntity();
-            o5.InitializeEntity(new Vector2(2200, 600), "base");
         }
 
         //ENGINE UPDATE LOOP
         public static string debugtxt;
-        public static Double delta;
+        public static float delta;
         void HandleApplicationIdle(object sender, EventArgs e)
         {
             DateTime startTime, endTime;
@@ -60,15 +45,16 @@ namespace Gametest
                 OnMapUpdated();
                 cam.Update();
                 Invalidate();
-                Thread.Sleep(1);
+                //Thread.Sleep(10);
+                
                 label2.Text = debugtxt;
             }
 
             endTime = DateTime.Now;
             Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
-            delta = elapsedMillisecs / 1000;
+            delta = (float)elapsedMillisecs / 1000;
 
-            label1.Text = Math.Floor(1/delta).ToString();
+            label1.Text = delta.ToString();
         }
 
         bool IsApplicationIdle()
@@ -105,9 +91,13 @@ namespace Gametest
             {
                 EObject obj = objs.ElementAt(i).Value;
 
-                if (obj.Rendering)
+                if(obj.ticking)
                 {
                     obj.Tick(delta);
+                }
+ 
+                if (obj.Rendering)
+                {
                     EEntity en = obj as EEntity;
                     if (en != null && en.active)
                     {
