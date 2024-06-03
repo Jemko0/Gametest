@@ -10,15 +10,18 @@ namespace Object.Entity.Character
     /// </summary>
     public class ECharacter : EEntity
     {
-        public float accel = 4000f;
-        public float jumpingpower = 950f;
-        public float speed = 1000f;
+        public float accel = 60f;
+        public float speed = 100f;
         public bool grounded = false;
-        public float gravity = 20f;
-
+        public float gravity = 15f;
         public ECharacter()
         {
             return;
+        }
+
+        public override void Tick(float delta)
+        {
+            base.Tick(delta);
         }
 
         public void AddMovementInput(float lr_input)
@@ -29,20 +32,20 @@ namespace Object.Entity.Character
         private void Move(float inputX, float inputY)
         {
             grounded = false;
-            
+
             velocity.X += (accel * inputX);
             velocity.X = Math.Clamp(velocity.X, -speed, speed);
+
             if (inputX == 0)
-            { 
-                velocity.X *= 0.9f;
+            {
+                velocity.X *= 0.9f * odelta;
             }
-            
+
             EngineStructs.ECollisionResult collisionResult = CheckCollisions();
 
-            Form1.debugtxt = ";";
             if (!collisionResult.collision)
             {
-                velocity.Y += gravity;
+                velocity.Y += gravity * odelta;
                 return;
 
             }
@@ -59,8 +62,8 @@ namespace Object.Entity.Character
         public void Jump()
         {
             if(grounded)
-            {
-                velocity.Y = -jumpingpower;
+            { 
+                velocity.Y = -6;
             }
             
         }

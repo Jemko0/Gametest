@@ -30,6 +30,21 @@ namespace Gametest
         {
             var o = new EEntity();
             o.InitializeEntity(new Vector2(400, 500), "base");
+
+            var o1 = new EEntity();
+            o1.InitializeEntity(new Vector2(700, 600), "base");
+
+            var o2 = new EEntity();
+            o2.InitializeEntity(new Vector2(1000, 550), "base");
+
+            var o3 = new EEntity();
+            o3.InitializeEntity(new Vector2(1400, 500), "base");
+
+            var o4 = new EEntity();
+            o4.InitializeEntity(new Vector2(1800, 500), "base");
+
+            var o5 = new EEntity();
+            o5.InitializeEntity(new Vector2(2200, 600), "base");
         }
 
         //ENGINE UPDATE LOOP
@@ -42,19 +57,15 @@ namespace Gametest
 
             while (IsApplicationIdle())
             {
-                OnMapUpdated();
                 cam.Update();
                 Invalidate();
-                //Thread.Sleep(10);
-                
-                label2.Text = debugtxt;
             }
 
             endTime = DateTime.Now;
-            Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
-            delta = (float)elapsedMillisecs / 1000;
+            float elapsedMillisecs = (float)((TimeSpan)(endTime - startTime)).TotalMilliseconds;
+            delta = (float)elapsedMillisecs;
 
-            label1.Text = delta.ToString();
+            label1.Text = "FPS: " + Math.Floor(1/delta).ToString() + "\n" + "DELTA: " + delta.ToString();
         }
 
         bool IsApplicationIdle()
@@ -91,13 +102,11 @@ namespace Gametest
             {
                 EObject obj = objs.ElementAt(i).Value;
 
-                if(obj.ticking)
-                {
-                    obj.Tick(delta);
-                }
- 
                 if (obj.Rendering)
                 {
+                    //Tick Object
+                    obj.Tick(delta);
+
                     EEntity en = obj as EEntity;
                     if (en != null && en.active)
                     {
