@@ -28,44 +28,37 @@ namespace Gametest
 
         public void CreateLevel()
         {
-            var o = new EEntity();
-            o.InitializeEntity(new Vector2(400, 500), "base");
-
-            var o1 = new EEntity();
-            o1.InitializeEntity(new Vector2(700, 600), "base");
-
-            var o2 = new EEntity();
-            o2.InitializeEntity(new Vector2(1000, 550), "base");
-
-            var o3 = new EEntity();
-            o3.InitializeEntity(new Vector2(1400, 500), "base");
-
-            var o4 = new EEntity();
-            o4.InitializeEntity(new Vector2(1800, 500), "base");
-
-            var o5 = new EEntity();
-            o5.InitializeEntity(new Vector2(2200, 600), "base");
+           for (int i = 0; i < 1; i++)
+            {
+                EEntity o = new EEntity();
+                int rnd = new Random().Next(5000);
+                o.InitializeEntity(new Vector2(0, 600), "base");
+                RegisterObject(o);
+                Thread.Sleep(1);
+            }
         }
 
         //ENGINE UPDATE LOOP
         public static string debugtxt;
         public static float delta;
+        public static DateTime endTime = DateTime.Now, startTime = DateTime.Now;
         void HandleApplicationIdle(object sender, EventArgs e)
         {
-            DateTime startTime, endTime;
             startTime = DateTime.Now;
-
             while (IsApplicationIdle())
             {
                 cam.Update();
-                Invalidate();
+                Invalidate(); //render
             }
+        }
 
+        void EndFPSMeasure()
+        {
+            float elapsedsec = (float)((TimeSpan)(endTime - startTime)).TotalSeconds;
+            delta = elapsedsec;
+            label1.Text = "FPS: " + Math.Floor(1 / delta).ToString() + "\n" + "DELTA: " + (delta * 1000).ToString() + "\n" + "OBJ:" + objs.Count.ToString();
             endTime = DateTime.Now;
-            float elapsedMillisecs = (float)((TimeSpan)(endTime - startTime)).TotalMilliseconds;
-            delta = (float)elapsedMillisecs;
-
-            label1.Text = "FPS: " + Math.Floor(1/delta).ToString() + "\n" + "DELTA: " + delta.ToString();
+            return;
         }
 
         bool IsApplicationIdle()
@@ -77,9 +70,14 @@ namespace Gametest
         public static int RegisterObject(EObject NewObject)
         {
             Random rnd = new Random();
-            int num = rnd.Next(100000);
+            int num = rnd.Next(1000000);
 
-            objs.Add(num, NewObject);
+            if(!objs.ContainsKey(num))
+            {
+                objs.Add(num, NewObject);
+            }
+            num = -1;
+            NewObject = null; 
             return num;
         }
 
@@ -97,7 +95,6 @@ namespace Gametest
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            
             for (int i = 0; i < objs.Count; i++)
             {
                 EObject obj = objs.ElementAt(i).Value;
@@ -118,48 +115,17 @@ namespace Gametest
 
                         e.Graphics.FillRectangle(new SolidBrush(Color.Black), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
                         e.Graphics.FillEllipse(new SolidBrush(Color.Red), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam)), new SizeF(10, 10)));
-                        
+
                         //e.Graphics.FillRectangle(new SolidBrush(Color.Aqua), new RectangleF(((int)en.Position.X) - (int)cam.position.X, ((int)en.Position.Y) - (int)cam.position.Y, (int)en.EDescription.HSize.X, (int)en.EDescription.HSize.Y));
                     }
                 }
+                EndFPSMeasure();
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             this.DoubleBuffered = true;
-
-            //FPS Counter
-            System.Windows.Forms.Timer FPSTimer = new System.Windows.Forms.Timer();
-            FPSTimer.Interval = 500;
-            FPSTimer.Start();
-            FPSTimer.Tick += UpdateFPS;
-        }
-
-      
-
-        DateTime _lastCheckTime = DateTime.Now;
-        long _frameCount = 0;
-
-        // called whenever a map is updated
-        void OnMapUpdated()
-        {
-            Interlocked.Increment(ref _frameCount);
-        }
-
-        // called every once in a while
-        double GetFps()
-        {
-            double secondsElapsed = (DateTime.Now - _lastCheckTime).TotalSeconds;
-            long count = Interlocked.Exchange(ref _frameCount, 0);
-            double fps = count / secondsElapsed;
-            _lastCheckTime = DateTime.Now;
-            return fps;
-        }
-
-        private void UpdateFPS(object? sender, EventArgs e)
-        {
-            //label1.Text = GetFps().ToString();
         }
     }
 }

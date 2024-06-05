@@ -10,10 +10,10 @@ namespace Object.Entity.Character
     /// </summary>
     public class ECharacter : EEntity
     {
-        public float accel = 60f;
-        public float speed = 100f;
+        public float accel = 2048f;
+        public float speed = 300f;
         public bool grounded = false;
-        public float gravity = 15f;
+        public float gravity = 500f;
         public ECharacter()
         {
             return;
@@ -33,12 +33,12 @@ namespace Object.Entity.Character
         {
             grounded = false;
 
-            velocity.X += (accel * inputX);
+            velocity.X += (accel * inputX) * odelta;
             velocity.X = Math.Clamp(velocity.X, -speed, speed);
 
             if (inputX == 0)
             {
-                velocity.X *= 0.9f * odelta;
+                velocity.X *= 0.98f;
             }
 
             EngineStructs.ECollisionResult collisionResult = CheckCollisions();
@@ -63,7 +63,7 @@ namespace Object.Entity.Character
         {
             if(grounded)
             { 
-                velocity.Y = -6;
+                velocity.Y = -250;
             }
             
         }
