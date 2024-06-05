@@ -11,7 +11,7 @@ namespace Object
         public bool ticking;
         public EObject()
         {
-            OBJID = Form1.RegisterObject(this);
+            OBJID = GameClient.RegisterObject(this);
             System.Windows.Forms.Timer Update = new System.Windows.Forms.Timer();
             Update.Interval = GameProperties.ms_tickrate;
             Update.Tick += FixedTick;
@@ -39,7 +39,7 @@ namespace Object
 
         public bool Destroy()
         {
-            Form1.DestroyObject(OBJID);
+            GameClient.DestroyObject(OBJID);
             return true;
         }
     }

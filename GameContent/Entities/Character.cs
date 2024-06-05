@@ -1,8 +1,4 @@
 using Engine;
-using Gametest;
-using System.ComponentModel;
-using System.Numerics;
-using System.Windows;
 namespace Object.Entity.Character
 {
     /// <summary>
@@ -14,6 +10,7 @@ namespace Object.Entity.Character
         public float speed = 300f;
         public bool grounded = false;
         public float gravity = 500f;
+        public short HP;
         public ECharacter()
         {
             return;

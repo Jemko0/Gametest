@@ -9,13 +9,13 @@ using System.Diagnostics;
 
 namespace Gametest
 {
-    public partial class Form1 : Form
+    public partial class GameClient : Form
     {
         //globals
         public static Dictionary<int, EObject> objs = new Dictionary<int, EObject>();
         public EPlayer player;
         public Camera cam;
-        public Form1()
+        public GameClient()
         {
             InitializeComponent();
             GameInit();

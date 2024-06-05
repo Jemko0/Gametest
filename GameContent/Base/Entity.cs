@@ -1,5 +1,4 @@
 using Gametest;
-using Game.Global;
 using System.Numerics;
 using Engine;
 
@@ -40,9 +39,9 @@ namespace Object.Entity
         public EngineStructs.ECollisionResult Collision()
         {
             EngineStructs.ECollisionResult cr = new EngineStructs.ECollisionResult();
-            for (int i = 0; i < Form1.objs.Count; i++)
+            for (int i = 0; i < GameClient.objs.Count; i++)
             {
-                EObject obj = Form1.objs.ElementAt(i).Value;
+                EObject obj = GameClient.objs.ElementAt(i).Value;
                 {
                     EEntity e = obj as EEntity;
                     if (e != this && e.collidable)
