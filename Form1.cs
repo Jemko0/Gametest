@@ -93,7 +93,7 @@ namespace Gametest
             RegisterObject(player);
         }
 
-        private void Form1_Paint(object sender, PaintEventArgs e)
+        private void Render(object sender, PaintEventArgs e)
         {
             for (int i = 0; i < objs.Count; i++)
             {

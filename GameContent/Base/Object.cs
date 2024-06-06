@@ -9,6 +9,9 @@ namespace Object
         public float odelta;
         public bool Rendering;
         public bool ticking;
+
+        //Collision Properties
+        public float restitution = 0.9f;
         public EObject()
         {
             OBJID = GameClient.RegisterObject(this);

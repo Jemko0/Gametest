@@ -11,6 +11,7 @@ namespace Object.Entity
         public Vector2 Position;
         public Vector2 velocity;
         public bool collidable = true;
+
         public EEntity()
         {
             active = true;
@@ -52,6 +53,7 @@ namespace Object.Entity
                             && Position.X < e.Position.X + e.EDescription.HSize.X
                             )
                         {
+                            cr.hitobject = e;
                             cr.collision = true;
                             return cr;
                         }

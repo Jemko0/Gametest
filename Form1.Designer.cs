@@ -63,7 +63,7 @@
             Text = "2D Engine";
             TransparencyKey = Color.Fuchsia;
             Load += Form1_Load;
-            Paint += Form1_Paint;
+            Paint += Render;
             ResumeLayout(false);
             PerformLayout();
         }

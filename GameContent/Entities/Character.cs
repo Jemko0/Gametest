@@ -51,7 +51,7 @@ namespace Object.Entity.Character
                 if (collisionResult.collision)
                 {
                     grounded = true;
-                    velocity.Y = 0;
+                    velocity.Y = -Math.Abs(velocity.Y * collisionResult.hitobject.restitution);
                 }
             }
         }
