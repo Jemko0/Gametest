@@ -6,8 +6,9 @@ public class EPlayer : ECharacter
 {
     public GameInput InputManager = new GameInput();
     public float _lr = 0;
-    public EPlayer()
+    public override void Init()
     {
+        base.Init();
         ticking = true;
         collidable = false;
     }

@@ -25,7 +25,7 @@ namespace Game
                     case "base":
                         e.Name = "BaseEntity";
                         e.Sprite = null;
-                        e.HSize = new Vector2(50000, 40);
+                        e.HSize = new Vector2(100, 40);
                         return e;
 
                     case "wall":

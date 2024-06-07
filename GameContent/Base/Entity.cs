@@ -1,11 +1,12 @@
 using Gametest;
 using System.Numerics;
 using Engine;
+using static Game.ID;
 
 namespace Object.Entity
 {
     /// <summary>
-    /// Entity
+    /// Entity is an EObject that gets rendered to the screen, its used for most game objects
     /// </summary>
     public class EEntity : EObject
     {
@@ -17,9 +18,26 @@ namespace Object.Entity
 
         public EEntity()
         {
+            Init();
+            return;
+        }
+
+        public override void Init()
+        {
+            base.Init();
             active = true;
             Rendering = true;
             ticking = true;
+        }
+
+        public virtual void SetPosition(Vector2 newpos)
+        {
+            Position = newpos;
+        }
+
+        public virtual void AddWorldOffset(Vector2 newoffset)
+        {
+            Position += newoffset;
         }
 
         public void InitializeEntity(Vector2 Pos, string EntityID)
@@ -31,8 +49,13 @@ namespace Object.Entity
         public override void Tick(float delta)
         {
             base.Tick(delta);
-            Position.X += velocity.X * delta;
-            Position.Y += velocity.Y * delta;
+            ETickMovement();
+        }
+
+        public virtual void ETickMovement()
+        {
+            Position.X += velocity.X * odelta;
+            Position.Y += velocity.Y * odelta;
         }
         public virtual EngineStructs.ECollisionResult CheckCollisions()
         {

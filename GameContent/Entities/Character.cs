@@ -13,9 +13,10 @@ namespace Object.Entity
         public float air_decel = 0.99f;
         public float grounded_decel = 0.89f;
         public short Health;
-        public ECharacter()
+
+        public override void Init()
         {
-            return;
+            base.Init();
         }
 
         public override void Tick(float delta)

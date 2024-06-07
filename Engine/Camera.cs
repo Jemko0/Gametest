@@ -1,20 +1,32 @@
 using Gametest;
 using System.Numerics;
 using Object.Entity;
-using Engine;
 
 namespace Engine.Camera
 {
     public class Camera
     {
-        public EEntity trackedEntity;
+        public EEntity? trackedEntity;
         public Vector2 position;
         public float zoom;
+        public Vector2 viewbounds;
         public Camera()
         {
-            zoom = 1;
+            zoom = 1f;
+            viewbounds = new Vector2 (GameClient.ActiveForm.Width, GameClient.ActiveForm.Height);
+        }
+
+        public Camera(Vector2 pos)
+        {
+            SetCamPos(pos);
         }
         
+        void SetCamPos(Vector2 pos)
+        {
+            position = pos;
+        }
+
+
         public void Update()
         {
             if (trackedEntity != null)

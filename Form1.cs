@@ -16,18 +16,24 @@ namespace Gametest
         {
             InitializeComponent();
             GameInit();
-            cam = new Camera();
-            CreatePlayer();
+            CreatePlyAndCam();
             Application.Idle += HandleApplicationIdle;
         }
 
-        public EPlayer CreatePlayer()
+        public void CreatePlyAndCam()
         {
             EPlayer player = new EPlayer();
             player.InitializeEntity(new System.Numerics.Vector2(400, -800), "player");
 
+            cam = new Camera(player.Position);
             cam.trackedEntity = player;
-            return player;
+
+            for (int i = 0; i < 500; i++)
+            {
+                EEntity t = new EEntity();
+                t.ticking = false;
+                t.InitializeEntity(new System.Numerics.Vector2(i* 150, 0), "base");
+            }
         }
 
         //ENGINE UPDATE LOOP
@@ -39,20 +45,9 @@ namespace Gametest
             startTime = DateTime.Now;
             while (IsApplicationIdle())
             {
-                cam.Update();
+                EngineLoop();
                 Invalidate(); //render
             }
-        }
-
-        void EndFPSMeasure()
-        {
-            endTime = DateTime.Now;
-            float elapsedsec = (float)((TimeSpan)(endTime - startTime)).TotalSeconds;
-            delta = elapsedsec;
-            label1.Text = "FPS: " + Math.Floor(1 / delta).ToString() + "\n"
-                + "DELTA: " + (delta * 1000).ToString() + "\n"
-                + "OBJ:" + objs.Count.ToString() + "\n";
-            return;
         }
 
         bool IsApplicationIdle()
@@ -61,12 +56,32 @@ namespace Gametest
             return EngineWin32.PeekMessage(out result, IntPtr.Zero, (uint)0, (uint)0, (uint)0) == 0;
         }
 
+        //engine loop
+        void EngineLoop()
+        {
+            cam.Update();
+        }
+
+        void EndFPSMeasure()
+        {
+            endTime = DateTime.Now;
+            float elapsedsec = (float)((TimeSpan)(endTime - startTime)).TotalSeconds;
+            delta = elapsedsec;
+            label1.Text =
+                
+                "FPS: " + Math.Floor(1 / delta).ToString() + "\n"
+                + "DELTA: " + (delta * 1000).ToString() + "\n"
+                + "OBJ:" + objs.Count.ToString() + "\n";
+
+            return;
+        }
+
         public static int RegisterObject(EObject? NewObject)
         {
             Random rnd = new Random();
             int num = rnd.Next(1000000);
-                objs.Add(num, NewObject);
-            NewObject = null; 
+            objs.Add(num, NewObject);
+            NewObject = null;
             return num;
         }
 
@@ -75,18 +90,7 @@ namespace Gametest
             objs.Remove(ObjectID);
         }
 
-
-<<<<<<< Updated upstream
-        public void CreatePlayer()
-        {
-            player = new EPlayer();
-            RegisterObject(player);
-        }
-
         private void Render(object sender, PaintEventArgs e)
-=======
-        private void Form1_Paint(object sender, PaintEventArgs e)
->>>>>>> Stashed changes
         {
             for (int i = 0; i < objs.Count; i++)
             {
@@ -105,18 +109,16 @@ namespace Gametest
                         if (en.EDescription.Sprite != null)
                         {
                             e.Graphics.DrawImage(en.EDescription.Sprite, new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam, this)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
-                            EndFPSMeasure();
-                            return;
                         }
-
-                        e.Graphics.FillRectangle(new SolidBrush(Color.Black), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam, this)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
-                        e.Graphics.FillEllipse(new SolidBrush(Color.Red), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam, this)), new SizeF(10, 10)));
-
-                        //e.Graphics.FillRectangle(new SolidBrush(Color.Aqua), new RectangleF(((int)en.Position.X) - (int)cam.position.X, ((int)en.Position.Y) - (int)cam.position.Y, (int)en.EDescription.HSize.X, (int)en.EDescription.HSize.Y));
+                        else
+                        {
+                            e.Graphics.FillRectangle(new SolidBrush(Color.Black), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam, this)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
+                            e.Graphics.FillEllipse(new SolidBrush(Color.Red), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam, this)), new SizeF(10, 10)));
+                        }
                     }
                 }
-                EndFPSMeasure();
             }
+            EndFPSMeasure();
         }
 
         private void Form1_Load(object sender, EventArgs e)
