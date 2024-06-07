@@ -2,6 +2,6 @@ namespace Game.Global.var
 {
     public static class GameProperties
     {
-        public static int ms_tickrate = 1;
+        public static int ms_tickrate = 16;
     }
 }

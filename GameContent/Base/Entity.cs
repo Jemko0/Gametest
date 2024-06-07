@@ -4,6 +4,9 @@ using Engine;
 
 namespace Object.Entity
 {
+    /// <summary>
+    /// Entity
+    /// </summary>
     public class EEntity : EObject
     {
         public bool active;
@@ -40,6 +43,7 @@ namespace Object.Entity
         public EngineStructs.ECollisionResult Collision()
         {
             EngineStructs.ECollisionResult cr = new EngineStructs.ECollisionResult();
+            cr.collision = false;
             for (int i = 0; i < GameClient.objs.Count; i++)
             {
                 EObject obj = GameClient.objs.ElementAt(i).Value;
@@ -57,7 +61,6 @@ namespace Object.Entity
                             cr.collision = true;
                             return cr;
                         }
-                        
                     }
                 }
             }

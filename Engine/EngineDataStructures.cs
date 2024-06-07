@@ -1,4 +1,5 @@
 using Engine.Camera;
+using Gametest;
 using Object;
 using Object.Entity;
 using System.Numerics;
@@ -30,14 +31,31 @@ namespace Engine
             public bool collision = false;
             public EObject hitobject = null;
         }
+        public struct SceneObject()
+        {
+            public EObject obj;
+            public Vector2 pos;
+            public bool tick;
+            public bool render;
+        }
+
+        public struct SceneEntity()
+        {
+            public EEntity entity;
+        }
+        public struct Scene()
+        {
+            public SceneObject[] objects;
+            public SceneEntity[] entities;
+        }
     }
 
     public class EngineFunctions
     {
-        public static Vector2 GetRenderTranslation(EEntity e, Engine.Camera.Camera cam)
+        public static Vector2 GetRenderTranslation(EEntity e, Engine.Camera.Camera cam, GameClient gc)
         {
             Vector2 result = new Vector2();
-            result = new Vector2((int)e.Position.X - cam.position.X + 550, (int)e.Position.Y - cam.position.Y + 400);
+            result = new Vector2((int)e.Position.X - cam.position.X + 550, (int)(e.Position.Y - cam.position.Y + 400));
 
             return result;
         }

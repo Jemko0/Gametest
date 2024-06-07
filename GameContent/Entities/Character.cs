@@ -1,5 +1,5 @@
 using Engine;
-namespace Object.Entity.Character
+namespace Object.Entity
 {
     /// <summary>
     /// A Character derives from EEntity and has the capabililty of handling movement input
@@ -10,7 +10,9 @@ namespace Object.Entity.Character
         public float speed = 300f;
         public bool grounded = false;
         public float gravity = 500f;
-        public short HP;
+        public float air_decel = 0.99f;
+        public float grounded_decel = 0.89f;
+        public short Health;
         public ECharacter()
         {
             return;
@@ -35,7 +37,7 @@ namespace Object.Entity.Character
 
             if (inputX == 0)
             {
-                velocity.X *= 0.98f;
+                    velocity.X /= 1.01f;
             }
 
             EngineStructs.ECollisionResult collisionResult = CheckCollisions();

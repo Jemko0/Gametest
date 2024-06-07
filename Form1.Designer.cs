@@ -29,35 +29,22 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            label2 = new Label();
             SuspendLayout();
             // 
             // label1
             // 
             label1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label1.AutoSize = true;
-            label1.Location = new Point(824, 508);
+            label1.Location = new Point(1172, 629);
             label1.Name = "label1";
             label1.Size = new Size(50, 20);
             label1.TabIndex = 0;
             label1.Text = "label1";
             // 
-            // label2
-            // 
-            label2.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            label2.AutoSize = true;
-            label2.Location = new Point(41, 37);
-            label2.Name = "label2";
-            label2.Size = new Size(50, 20);
-            label2.TabIndex = 1;
-            label2.Text = "label2";
-            // 
             // GameClient
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(914, 552);
-            Controls.Add(label2);
+            AutoScaleMode = AutoScaleMode.Inherit;
+            ClientSize = new Size(1280, 720);
             Controls.Add(label1);
             Name = "GameClient";
             Text = "2D Engine";
@@ -75,14 +62,11 @@
         public Control input;
         private void GameInit()
         {
-            GameGraphics = CreateGraphics();
-            GamePen = new Pen(Color.Black, 1);
-            GameBrush = new SolidBrush(Color.Black);
+            sm = new SceneManager(this);
         }
 
         #endregion
 
         private Label label1;
-        private Label label2;
     }
 }

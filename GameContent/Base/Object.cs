@@ -43,6 +43,7 @@ namespace Object
         public bool Destroy()
         {
             GameClient.DestroyObject(OBJID);
+            GC.Collect();
             return true;
         }
     }
