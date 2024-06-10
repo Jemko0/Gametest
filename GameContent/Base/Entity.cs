@@ -1,7 +1,6 @@
 using Gametest;
 using System.Numerics;
-using Engine;
-using static Game.ID;
+using Engine.Data;
 
 namespace Object.Entity
 {

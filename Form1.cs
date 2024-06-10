@@ -1,8 +1,8 @@
 using Object.Entity;
 using Object;
 using Engine.Camera;
-using Engine;
-using Microsoft.VisualBasic.ApplicationServices;
+using Engine.Data;
+using Gametest.GameContent.World;
 
 namespace Gametest
 {
@@ -17,6 +17,7 @@ namespace Gametest
             InitializeComponent();
             GameInit();
             CreatePlyAndCam();
+            Worldgen.Generate();
             Application.Idle += HandleApplicationIdle;
         }
 
@@ -27,13 +28,6 @@ namespace Gametest
 
             cam = new Camera(player.Position);
             cam.trackedEntity = player;
-
-            for (int i = 0; i < 500; i++)
-            {
-                EEntity t = new EEntity();
-                t.ticking = false;
-                t.InitializeEntity(new System.Numerics.Vector2(i* 150, 0), "base");
-            }
         }
 
         //ENGINE UPDATE LOOP
@@ -62,7 +56,7 @@ namespace Gametest
             cam.Update();
         }
 
-        void EndFPSMeasure()
+        void EndFPSMeasure(int rendobj)
         {
             endTime = DateTime.Now;
             float elapsedsec = (float)((TimeSpan)(endTime - startTime)).TotalSeconds;
@@ -71,7 +65,8 @@ namespace Gametest
                 
                 "FPS: " + Math.Floor(1 / delta).ToString() + "\n"
                 + "DELTA: " + (delta * 1000).ToString() + "\n"
-                + "OBJ:" + objs.Count.ToString() + "\n";
+                + "OBJ:" + objs.Count.ToString() + "\n"
+                + "RO:" + rendobj.ToString();
 
             return;
         }
@@ -79,10 +74,15 @@ namespace Gametest
         public static int RegisterObject(EObject? NewObject)
         {
             Random rnd = new Random();
+
+            rand:
             int num = rnd.Next(1000000);
-            objs.Add(num, NewObject);
-            NewObject = null;
-            return num;
+            if(!objs.ContainsKey(num))
+            {
+                objs.Add(num, NewObject);
+                return num;
+            }
+            goto rand;
         }
 
         public static void DestroyObject(int ObjectID)
@@ -91,6 +91,7 @@ namespace Gametest
         }
         private void Render(object sender, PaintEventArgs e)
         {
+            int ro = 0;
             for (int i = 0; i < objs.Count; i++)
             {
                 EObject obj = objs.ElementAt(i).Value;
@@ -103,8 +104,9 @@ namespace Gametest
                 if(obj.Rendering)
                 {
                     EEntity en = obj as EEntity;
-                    if (en != null && en.active)
+                    if (en != null && en.active && cam.PosInCamBounds(en.Position))
                     {
+                        ro++;
                         if (en.EDescription.Sprite != null)
                         {
                             e.Graphics.DrawImage(en.EDescription.Sprite, new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam, this)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
@@ -114,10 +116,11 @@ namespace Gametest
                             e.Graphics.FillRectangle(new SolidBrush(Color.Black), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam, this)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
                             e.Graphics.FillEllipse(new SolidBrush(Color.Red), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam, this)), new SizeF(10, 10)));
                         }
+                        
                     }
                 }
             }
-            EndFPSMeasure();
+            EndFPSMeasure(ro);
         }
 
         private void Form1_Load(object sender, EventArgs e)

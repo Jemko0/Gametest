@@ -32,7 +32,7 @@ public class EPlayer : ECharacter
             Jump();
         }
 
-        if(Position.Y > 0)
+        if(Position.Y > 1000000)
         {
             velocity.Y = 0;
             Position = new System.Numerics.Vector2(400, -400);

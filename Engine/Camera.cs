@@ -1,4 +1,5 @@
 using Gametest;
+using Engine.Data;
 using System.Numerics;
 using Object.Entity;
 
@@ -26,6 +27,11 @@ namespace Engine.Camera
             position = pos;
         }
 
+        public bool PosInCamBounds(Vector2 pos)
+        {
+            float x = pos.X, y = pos.Y;
+            return x > position.X - 400 - viewbounds.X && x < position.X + 400 + viewbounds.X && y > position.Y - 400 - viewbounds.Y && y < position.Y + 400 + viewbounds.Y;
+        }
 
         public void Update()
         {

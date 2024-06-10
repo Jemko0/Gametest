@@ -31,7 +31,7 @@ namespace Gametest
                 }
             }
         }
-        public bool LoadScene(Engine.EngineStructs.Scene sdata)
+        public bool LoadScene(Engine.Data.EngineStructs.Scene sdata)
         {
             return true;
         }

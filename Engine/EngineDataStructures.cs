@@ -5,7 +5,7 @@ using Object.Entity;
 using System.Numerics;
 using System.Runtime.InteropServices;
 
-namespace Engine
+namespace Engine.Data
 {
     public class EngineWin32
     {
@@ -30,6 +30,13 @@ namespace Engine
         {
             public bool collision = false;
             public EObject hitobject = null;
+        }
+
+        public struct WTile(short inx, short iny)
+        {
+            public string id;
+            public short x = inx;
+            public short y = iny;
         }
         public struct SceneObject()
         {
