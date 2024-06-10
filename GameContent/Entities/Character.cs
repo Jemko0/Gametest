@@ -54,6 +54,8 @@ namespace Object.Entity
                 if (collisionResult.collision)
                 {
                     grounded = true;
+
+                    //boonce
                     velocity.Y = -Math.Abs(velocity.Y * collisionResult.hitobject.restitution);
                 }
             }

@@ -90,6 +90,15 @@ namespace Gametest
             objs.Remove(ObjectID);
         }
 
+<<<<<<< Updated upstream
+=======
+
+        public void CreatePlayer()
+        {
+            player = new EPlayer();
+        }
+
+>>>>>>> Stashed changes
         private void Render(object sender, PaintEventArgs e)
         {
             for (int i = 0; i < objs.Count; i++)
