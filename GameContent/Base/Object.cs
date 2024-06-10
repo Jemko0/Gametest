@@ -14,11 +14,7 @@ namespace Object
         public bool ticking;
 
         //Collision Properties
-<<<<<<< Updated upstream
         public float restitution = 0.1f;
-=======
-        public float restitution = 0.25f;
->>>>>>> Stashed changes
         public EObject()
         {
             OBJID = GameClient.RegisterObject(this);

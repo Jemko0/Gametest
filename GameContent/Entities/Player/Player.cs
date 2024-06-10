@@ -19,7 +19,6 @@ public class EPlayer : ECharacter
         _lr = 0;
         if (InputManager.IsKeyDown(Keys.A) == true)
         {
-<<<<<<< Updated upstream
             _lr = -1;
         }
         if (InputManager.IsKeyDown(Keys.D) == true)
@@ -31,10 +30,6 @@ public class EPlayer : ECharacter
         if (InputManager.IsKeyDown(Keys.Space) == true)
         {
             Jump();
-=======
-        InitializeEntity(new System.Numerics.Vector2(400,500), "player");
-            collidable = false;
->>>>>>> Stashed changes
         }
 
         if(Position.Y > 0)
