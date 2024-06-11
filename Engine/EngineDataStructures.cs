@@ -24,8 +24,15 @@ namespace Engine.Data
         public static extern int PeekMessage(out NativeMessage message, IntPtr window, uint filterMin, uint filterMax, uint remove);
     }
 
-    public class EngineStructs
+    public static class EngineStructs
     {
+
+        public struct IntVector2(int x, int y)
+        {
+            public int x = x;
+            public int y = y;
+        }
+
         public struct ECollisionResult()
         {
             public bool collision = false;
@@ -59,10 +66,10 @@ namespace Engine.Data
 
     public class EngineFunctions
     {
-        public static Vector2 GetRenderTranslation(EEntity e, Engine.Camera.Camera cam, GameClient gc)
+        public static Vector2 GetRenderTranslation(Vector2 enitityposition, Engine.Camera.Camera cam, GameClient gc)
         {
             Vector2 result = new Vector2();
-            result = new Vector2((int)e.Position.X - cam.position.X + 550, (int)(e.Position.Y - cam.position.Y + 400));
+            result = new Vector2((int)enitityposition.X - cam.position.X + 550, (int)(enitityposition.Y - cam.position.Y + 400));
 
             return result;
         }

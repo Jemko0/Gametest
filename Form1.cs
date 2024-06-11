@@ -3,6 +3,8 @@ using Object;
 using Engine.Camera;
 using Engine.Data;
 using Gametest.GameContent.World;
+using Engine;
+using System.Runtime.Intrinsics;
 
 namespace Gametest
 {
@@ -10,15 +12,17 @@ namespace Gametest
     {
         //globals
         public static Dictionary<int, EObject> objs = new Dictionary<int, EObject>();
-        public Camera cam;
+        public static Dictionary<EngineStructs.IntVector2, string> worldtiles = new Dictionary<EngineStructs.IntVector2, string>();
+        public static Camera cam;
         private SceneManager sm;
         public GameClient()
         {
             InitializeComponent();
             GameInit();
             CreatePlyAndCam();
-            Worldgen.Generate();
             Application.Idle += HandleApplicationIdle;
+
+            Worldgen.Generate();
         }
 
         public void CreatePlyAndCam()
@@ -91,35 +95,8 @@ namespace Gametest
         }
         private void Render(object sender, PaintEventArgs e)
         {
-            int ro = 0;
-            for (int i = 0; i < objs.Count; i++)
-            {
-                EObject obj = objs.ElementAt(i).Value;
-
-                if (obj.ticking)
-                {
-                    obj.Tick(delta);
-                }
-
-                if(obj.Rendering)
-                {
-                    EEntity en = obj as EEntity;
-                    if (en != null && en.active && cam.PosInCamBounds(en.Position))
-                    {
-                        ro++;
-                        if (en.EDescription.Sprite != null)
-                        {
-                            e.Graphics.DrawImage(en.EDescription.Sprite, new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam, this)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
-                        }
-                        else
-                        {
-                            e.Graphics.FillRectangle(new SolidBrush(Color.Black), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam, this)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
-                            e.Graphics.FillEllipse(new SolidBrush(Color.Red), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en, cam, this)), new SizeF(10, 10)));
-                        }
-                        
-                    }
-                }
-            }
+            int ro;
+            ro = Renderer.Render(sender, e, this);
             EndFPSMeasure(ro);
         }
 

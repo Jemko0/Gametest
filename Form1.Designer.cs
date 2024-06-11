@@ -44,6 +44,7 @@
             // GameClient
             // 
             AutoScaleMode = AutoScaleMode.Inherit;
+            AutoSize = true;
             ClientSize = new Size(1280, 720);
             Controls.Add(label1);
             Name = "GameClient";

@@ -5,7 +5,7 @@ namespace Object.Entity
 {
     public class ETile : EEntity
     {
-        public ID.ItemID.ItemData itemdata;
+        public ID.TileID.TileData tiledata;
         public ETile(string id)
         {
             SetTileDefaults(id);
@@ -19,10 +19,11 @@ namespace Object.Entity
 
         public void SetTileDefaults(string _id)
         {
-            itemdata = ID.ItemID.GetItem(_id);
+            tiledata = ID.TileID.GetTile(_id);
             Rendering = true;
             ticking = false;
             EDescription.HSize = new System.Numerics.Vector2(32, 32);
+            EDescription.Sprite = tiledata.sprite;
         }
     }
 }

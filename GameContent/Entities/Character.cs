@@ -38,7 +38,7 @@ namespace Object.Entity
 
             if (inputX == 0)
             {
-                    velocity.X /= 1.01f;
+                    velocity.X /= 1.05f;
             }
 
             EngineStructs.ECollisionResult collisionResult = CheckCollisions();
@@ -55,8 +55,15 @@ namespace Object.Entity
                 {
                     grounded = true;
 
-                    //boonce
-                    velocity.Y = -Math.Abs(velocity.Y * collisionResult.hitobject.restitution);
+                    //boonce with fallback restitution
+                    if(collisionResult.hitobject != null)
+                    {
+                        velocity.Y = -Math.Abs(velocity.Y * collisionResult.hitobject.restitution);
+                    }
+                    else
+                    {
+                        velocity.Y = -Math.Abs(velocity.Y * 0.25f); ;
+                    }
                 }
             }
         }

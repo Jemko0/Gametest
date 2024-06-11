@@ -86,6 +86,19 @@ namespace Object.Entity
                     }
                 }
             }
+
+            foreach (var tile in GameClient.worldtiles)
+            {
+                if (Position.Y + EDescription.HSize.Y > tile.Key.y
+                            && Position.Y < tile.Key.y + 16
+                            && Position.X + EDescription.HSize.X > tile.Key.x
+                            && Position.X < tile.Key.x + 16
+                            )
+                {
+                    cr.collision = true;
+                    return cr;
+                }
+            }
             return cr;
         }
     }

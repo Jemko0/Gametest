@@ -1,4 +1,5 @@
 using Engine.Data;
+using Gametest.Properties;
 using System.Data;
 using System.Numerics;
 using System.Runtime.Versioning;
@@ -15,6 +16,23 @@ namespace Game
                 public byte rarity;
                 public byte pickpower;
                 public string dropItemID;
+                public Image sprite;
+            }
+
+            public static TileData GetTile(string TileID)
+            {
+                TileData t = new TileData();
+                switch (TileID)
+                {
+                    default:
+                        return t;
+
+                    case "t_dirt":
+                        t.dropItemID = "i_dirt";
+                        t.sprite = Resources.tiledirt;
+                        t.hardness = 15;
+                        return t;
+                }
             }
         }
 
