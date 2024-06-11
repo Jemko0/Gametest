@@ -1,21 +1,37 @@
 using Game.Global;
+using Gametest.GameContent.Gameplay;
 
 namespace Object.Entity;
 
 public class EPlayer : ECharacter
 {
     public GameInput InputManager = new GameInput();
+    public Inventory inv = new Inventory();
+    public int selecteditem;
+    public Item helditem;
     public float _lr = 0;
     public override void Init()
     {
         base.Init();
         ticking = true;
         collidable = false;
+        inv.AddItem("basepick");
+        UpdateHeld();
+    }
+
+    public void UpdateHeld()
+    {
+        if(helditem != null)
+        {
+            helditem.Destroy();
+        }
+         
+        helditem = inv.items[selecteditem]._class;
     }
 
     public override void Tick(float delta)
     {
-        base.Tick(delta);
+        base.Tick(delta); 
         _lr = 0;
         if (InputManager.IsKeyDown(Keys.A) == true)
         {

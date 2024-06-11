@@ -73,6 +73,16 @@ namespace Gametest.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap itempickbase {
+            get {
+                object obj = ResourceManager.GetObject("itempickbase", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap tiledirt {
             get {
                 object obj = ResourceManager.GetObject("tiledirt", resourceCulture);

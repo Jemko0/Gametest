@@ -1,8 +1,6 @@
-using Engine.Data;
 using Gametest.Properties;
-using System.Data;
+using Object.Entity;
 using System.Numerics;
-using System.Runtime.Versioning;
 
 namespace Game
 {
@@ -31,6 +29,7 @@ namespace Game
                         t.dropItemID = "i_dirt";
                         t.sprite = Resources.tiledirt;
                         t.hardness = 15;
+                        t.pickpower = 1;
                         return t;
                 }
             }
@@ -42,7 +41,9 @@ namespace Game
             public struct ItemData()
             {
                 public string id;
+                public Item _class;
                 public string name;
+                public byte pickpower;
                 public string tooltip;
                 public Image sprite;
             }
@@ -58,10 +59,11 @@ namespace Game
                     default:
                         return i;
 
-                    case "base":
-                        i.name = "base";
+                    case "basepick":
+                        i.name = "basepick";
+                        i._class = new Item("basepick");
                         i.tooltip = "base";
-                        i.sprite = null;
+                        i.sprite = Resources.itempickbase;
                         return i;
                 }
             }

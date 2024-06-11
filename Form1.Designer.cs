@@ -42,9 +42,6 @@
             label1.TabIndex = 0;
             label1.Text = "label1";
             // 
-            // RenderThread
-            // 
-            // 
             // GameClient
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
@@ -57,6 +54,7 @@
             TransparencyKey = Color.Fuchsia;
             Load += Form1_Load;
             Paint += Render;
+            MouseDown += GameClient_MouseDown;
             ResumeLayout(false);
             PerformLayout();
         }

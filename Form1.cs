@@ -106,5 +106,11 @@ namespace Gametest
         {
             this.DoubleBuffered = true;
         }
+
+
+        private void GameClient_MouseDown(object sender, MouseEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(e.Location.X - GameClient.cam.position.X);
+        }
     }
 }

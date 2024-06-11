@@ -19,9 +19,6 @@ namespace Object
         {
             OBJID = GameClient.RegisterObject(this);
             System.Windows.Forms.Timer Update = new System.Windows.Forms.Timer();
-            Update.Interval = GameProperties.ms_tickrate;
-            Update.Tick += FixedTick;
-            Update.Start();
 
             Init();
             return;
@@ -42,14 +39,6 @@ namespace Object
         public virtual void Tick(float delta)
         {
             odelta = delta;
-            return;
-        }
-
-        /// <summary>
-        /// FixedTick runs at 60 Ticks per second and will wait if the frame is completed faster than 60 times a second
-        /// </summary>
-        public virtual void FixedTick(object? sender, EventArgs e)
-        {
             return;
         }
 

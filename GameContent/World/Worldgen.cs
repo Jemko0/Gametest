@@ -1,6 +1,8 @@
 ﻿using Gametest;
 using System.Numerics;
 using Engine.Data;
+using Engine;
+using Engine.Camera;
 namespace Gametest.GameContent.World
 {
     public class Worldgen
@@ -27,6 +29,11 @@ namespace Gametest.GameContent.World
                     }
                 }
             }
+        }
+
+        public static void MineTile(int x, int y)
+        {
+                GameClient.worldtiles.Remove(new EngineStructs.IntVector2(x - (int)GameClient.cam.position.X, y - (int)GameClient.cam.position.Y));
         }
 
         public static void Setupnoise()
