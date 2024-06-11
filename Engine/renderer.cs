@@ -43,6 +43,7 @@ namespace Engine
                     EEntity en = obj as EEntity;
                     if (en != null && en.active && GameClient.cam.PosInCamBounds(en.Position))
                     {
+
                         ro++;
                         if (en.EDescription.Sprite != null)
                         {

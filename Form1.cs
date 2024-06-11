@@ -95,9 +95,9 @@ namespace Gametest
         }
         private void Render(object sender, PaintEventArgs e)
         {
-            int ro;
-            ro = Renderer.Render(sender, e, this);
-            EndFPSMeasure(ro);
+            int rob;
+            rob = Renderer.Render(sender, e, this);
+            EndFPSMeasure(rob);
         }
 
         private void Form1_Load(object sender, EventArgs e)
