@@ -5,6 +5,7 @@ using Engine.Data;
 using Gametest.GameContent.World;
 using Engine;
 using System.Runtime.Intrinsics;
+using System.ComponentModel;
 
 namespace Gametest
 {
@@ -66,7 +67,7 @@ namespace Gametest
             float elapsedsec = (float)((TimeSpan)(endTime - startTime)).TotalSeconds;
             delta = elapsedsec;
             label1.Text =
-                
+
                 "FPS: " + Math.Floor(1 / delta).ToString() + "\n"
                 + "DELTA: " + (delta * 1000).ToString() + "\n"
                 + "OBJ:" + objs.Count.ToString() + "\n"
@@ -79,9 +80,9 @@ namespace Gametest
         {
             Random rnd = new Random();
 
-            rand:
+        rand:
             int num = rnd.Next(1000000);
-            if(!objs.ContainsKey(num))
+            if (!objs.ContainsKey(num))
             {
                 objs.Add(num, NewObject);
                 return num;
@@ -96,6 +97,7 @@ namespace Gametest
         private void Render(object sender, PaintEventArgs e)
         {
             int rob;
+            RenderThread.RunWorkerAsync();
             rob = Renderer.Render(sender, e, this);
             EndFPSMeasure(rob);
         }

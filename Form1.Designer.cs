@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             label1 = new Label();
+            RenderThread = new System.ComponentModel.BackgroundWorker();
             SuspendLayout();
             // 
             // label1
@@ -40,6 +41,9 @@
             label1.Size = new Size(50, 20);
             label1.TabIndex = 0;
             label1.Text = "label1";
+            // 
+            // RenderThread
+            // 
             // 
             // GameClient
             // 
@@ -70,5 +74,6 @@
         #endregion
 
         private Label label1;
+        public System.ComponentModel.BackgroundWorker RenderThread;
     }
 }

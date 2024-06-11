@@ -5,7 +5,7 @@ namespace Gametest.GameContent.World
 {
     public class Worldgen
     {
-        public static short size = 128;
+        public static short size = 500;
         public static int tilesize = 32;
         public static FastNoiseLite? noise;
         public static void Generate()
