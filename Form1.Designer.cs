@@ -1,4 +1,7 @@
-﻿namespace Gametest
+﻿using Gametest.Properties;
+using System.Runtime.CompilerServices;
+
+namespace Gametest
 {
     partial class GameClient
     {
@@ -28,9 +31,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             label1 = new Label();
             RenderThread = new System.ComponentModel.BackgroundWorker();
-            listBox1 = new ListBox();
+            imageList1 = new ImageList(components);
+            pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -43,13 +49,20 @@
             label1.TabIndex = 0;
             label1.Text = "label1";
             // 
-            // listBox1
+            // imageList1
             // 
-            listBox1.FormattingEnabled = true;
-            listBox1.Location = new Point(12, 12);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(871, 104);
-            listBox1.TabIndex = 2;
+            imageList1.ColorDepth = ColorDepth.Depth32Bit;
+            imageList1.ImageSize = new Size(16, 16);
+            imageList1.TransparentColor = Color.Transparent;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
+            pictureBox1.Location = new Point(12, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(593, 90);
+            pictureBox1.TabIndex = 1;
+            pictureBox1.TabStop = false;
             // 
             // GameClient
             // 
@@ -57,7 +70,7 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(1280, 720);
-            Controls.Add(listBox1);
+            Controls.Add(pictureBox1);
             Controls.Add(label1);
             HelpButton = true;
             Name = "GameClient";
@@ -66,12 +79,13 @@
             Load += Form1_Load;
             Paint += Render;
             MouseDown += GameClient_MouseDown;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         //GAME CONTENT
-        public Graphics GameGraphics;
+        public static Graphics UIGraphics;
         public Pen GamePen;
         public Brush GameBrush;
         public Control input;
@@ -84,6 +98,7 @@
 
         private Label label1;
         public System.ComponentModel.BackgroundWorker RenderThread;
-        public static ListBox listBox1;
+        private ImageList imageList1;
+        public PictureBox pictureBox1;
     }
 }

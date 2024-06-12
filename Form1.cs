@@ -6,6 +6,7 @@ using Gametest.GameContent.World;
 using Engine;
 using Gametest.GameContent.Gameplay;
 using Game;
+using System.Runtime.CompilerServices;
 
 namespace Gametest
 {
@@ -124,15 +125,6 @@ namespace Gametest
         private void GameClient_MouseDown(object sender, MouseEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine(e.Location.X - GameClient.cam.position.X);
-        }
-
-        public static void SetInventoryUI(Inventory _i)
-        {
-            listBox1.Items.Clear();
-            foreach(var item in _i.items)
-            {
-                listBox1.Items.Add(ID.ItemID.GetItem(item.id).sprite);
-            }
         }
     }
 }

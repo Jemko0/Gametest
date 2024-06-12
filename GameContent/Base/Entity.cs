@@ -1,6 +1,8 @@
 using Gametest;
 using System.Numerics;
 using Engine.Data;
+using Engine;
+using System;
 
 namespace Object.Entity
 {
@@ -38,6 +40,7 @@ namespace Object.Entity
         {
             EDescription = Game.ID.EntityID.GetEntity(EntityID);
             Position = Pos;
+            //Renderer.SPRTCACHE_ENTITY.Add(OBJID, EDescription.Sprite);
         }
 
         public override void Tick(float delta)

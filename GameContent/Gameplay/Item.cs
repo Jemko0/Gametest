@@ -43,17 +43,20 @@ namespace Object.Entity
         public override void Tick(float delta)
         {
             base.Tick(delta);
-
-            EngineStructs.ECollisionResult collisionResult = CheckCollisions();
-            if (!collisionResult.collision)
+            if(!pickedup)
             {
-                velocity.Y += Game.GameProperties.gravity * odelta;
-                return;
-            }
-            else
-            {
-                velocity.Y = 0;
-            }
+                velocity.X /= 1 + odelta * 6;
+                EngineStructs.ECollisionResult collisionResult = CheckCollisions();
+                if (!collisionResult.collision)
+                {
+                    velocity.Y += Game.GameProperties.gravity * odelta;
+                    return;
+                }
+                else
+                {
+                    velocity.Y = 0;
+                }
+            } 
         }
 
         public virtual void Use()

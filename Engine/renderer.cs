@@ -13,7 +13,8 @@ namespace Engine
         public static GameClient g;
         public static PaintEventArgs e;
         public static int ro;
-        public static Dictionary<string, Image> cache_tsprites = new Dictionary<string, Image>();
+        public static Dictionary<string, Image> SPRTCACHE_TILES = new Dictionary<string, Image>();
+        public static Dictionary<int, Image> SPRTCACHE_ENTITY = new Dictionary<int, Image>();
         public Renderer()
         {
         
@@ -40,7 +41,6 @@ namespace Engine
                     EEntity en = obj as EEntity;
                     if (en != null)
                     {
-
                         ro++;
                         if (en.EDescription.Sprite != null)
                         {
@@ -63,13 +63,13 @@ namespace Engine
             {
                 if(GameClient.cam.PosInCamBounds(new System.Numerics.Vector2(tile.Key.x, tile.Key.y)))
                 {
-                    if(cache_tsprites.ContainsKey(tile.Value))
+                    if(SPRTCACHE_TILES.ContainsKey(tile.Value))
                     {
-                        e.Graphics.DrawImage(cache_tsprites[tile.Value], new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(new System.Numerics.Vector2(tile.Key.x, tile.Key.y), GameClient.cam, g)), new SizeF(32, 32)));
+                        e.Graphics.DrawImage(SPRTCACHE_TILES[tile.Value], new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(new System.Numerics.Vector2(tile.Key.x, tile.Key.y), GameClient.cam, g)), new SizeF(32, 32)));
                     }
                     else
                     {
-                        cache_tsprites.Add(tile.Value, ID.TileID.GetTile(tile.Value).sprite);
+                        SPRTCACHE_TILES.Add(tile.Value, ID.TileID.GetTile(tile.Value).sprite);
                     }
                 }
             }

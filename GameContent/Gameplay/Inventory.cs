@@ -35,7 +35,7 @@ namespace Gametest.GameContent.Gameplay
 
         public void UpdateUI()
         {
-            GameClient.SetInventoryUI(this);
+            
         }
 
         public void RemoveItem(string _id, int count)

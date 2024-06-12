@@ -17,6 +17,7 @@ public class EPlayer : ECharacter
         base.Init();
         ticking = true;
         collidable = false;
+        gravitymult = 3.0f;
         inv.AddItem("basepick", 1, string.Empty);
         UpdateHeld();
     }

@@ -8,9 +8,11 @@ namespace Object.Entity
     {
         public float accel = 2048f;
         public float speed = 300f;
+        public float gravitymult = 1.0f;
         public bool grounded = false;
         public float air_decel = 0.99f;
         public float grounded_decel = 0.89f;
+        public float _input;
         public short Health;
 
         public override void Init()
@@ -21,11 +23,12 @@ namespace Object.Entity
         public override void Tick(float delta)
         {
             base.Tick(delta);
+            Move(_input, 0);
         }
 
         public void AddMovementInput(float lr_input)
         {
-            Move(lr_input, 0);
+            _input = lr_input;
         }
 
         private void Move(float inputX, float inputY)
@@ -44,7 +47,7 @@ namespace Object.Entity
 
             if (!collisionResult.collision)
             {
-                velocity.Y += Game.GameProperties.gravity * odelta;
+                velocity.Y += Game.GameProperties.gravity * gravitymult * odelta;
                 return;
 
             }

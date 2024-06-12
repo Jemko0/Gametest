@@ -29,7 +29,7 @@ namespace Engine.Camera
 
         public bool PosInCamBounds(Vector2 pos)
         {
-            return pos.X > position.X - 400 - viewbounds.X && pos.X < position.X + 400 + viewbounds.X && pos.Y > position.Y - 300 - viewbounds.Y && pos.Y < position.Y + 300 + viewbounds.Y;
+            return pos.X > position.X - 532 - viewbounds.X && pos.X < position.X + 664 + viewbounds.X && pos.Y > position.Y - 300 - viewbounds.Y && pos.Y < position.Y + 300 + viewbounds.Y;
         }
 
         public void Update()
