@@ -58,7 +58,21 @@ namespace Gametest
         //engine loop
         void EngineLoop()
         {
+            TickObjects();
             cam.Update();
+        }
+
+        public void TickObjects()
+        {
+            foreach(var obj in objs.Values.ToList()) 
+            {
+                obj.ticking = cam.PosInCamBounds((obj as EEntity).Position);
+
+                if (obj.ticking)
+                {
+                    obj.Tick(delta);
+                }
+            }
         }
 
         void EndFPSMeasure(int rendobj)
@@ -114,10 +128,10 @@ namespace Gametest
 
         public static void SetInventoryUI(Inventory _i)
         {
-            listView1.Clear();
+            listBox1.Items.Clear();
             foreach(var item in _i.items)
             {
-                listView1.Items.Add(new ListViewItem(ID.ItemID.GetItem(item.id).name));
+                listBox1.Items.Add(ID.ItemID.GetItem(item.id).sprite);
             }
         }
     }

@@ -9,7 +9,6 @@ namespace Object.Entity
         public float accel = 2048f;
         public float speed = 300f;
         public bool grounded = false;
-        public float gravity = Game.GameProperties.gravity;
         public float air_decel = 0.99f;
         public float grounded_decel = 0.89f;
         public short Health;
@@ -45,7 +44,7 @@ namespace Object.Entity
 
             if (!collisionResult.collision)
             {
-                velocity.Y += gravity * odelta;
+                velocity.Y += Game.GameProperties.gravity * odelta;
                 return;
 
             }

@@ -4,6 +4,7 @@ using Object;
 using Gametest;
 using Engine.Camera;
 using Game;
+using System.Runtime.CompilerServices;
 
 namespace Engine
 {
@@ -12,6 +13,7 @@ namespace Engine
         public static GameClient g;
         public static PaintEventArgs e;
         public static int ro;
+        public static Dictionary<string, Image> cache_tsprites = new Dictionary<string, Image>();
         public Renderer()
         {
         
@@ -33,15 +35,10 @@ namespace Engine
             {
                 EObject obj = GameClient.objs.ElementAt(i).Value;
 
-                if (obj.ticking)
-                {
-                    obj.Tick(GameClient.delta);
-                }
-
-                if (obj.Rendering)
+                if (obj.Rendering && obj.ticking)
                 {
                     EEntity en = obj as EEntity;
-                    if (en != null && en.active && GameClient.cam.PosInCamBounds(en.Position))
+                    if (en != null)
                     {
 
                         ro++;
@@ -66,7 +63,14 @@ namespace Engine
             {
                 if(GameClient.cam.PosInCamBounds(new System.Numerics.Vector2(tile.Key.x, tile.Key.y)))
                 {
-                   e.Graphics.DrawImage(ID.TileID.GetTile(tile.Value).sprite, new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(new System.Numerics.Vector2(tile.Key.x, tile.Key.y), GameClient.cam, g)), new SizeF(32, 32)));
+                    if(cache_tsprites.ContainsKey(tile.Value))
+                    {
+                        e.Graphics.DrawImage(cache_tsprites[tile.Value], new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(new System.Numerics.Vector2(tile.Key.x, tile.Key.y), GameClient.cam, g)), new SizeF(32, 32)));
+                    }
+                    else
+                    {
+                        cache_tsprites.Add(tile.Value, ID.TileID.GetTile(tile.Value).sprite);
+                    }
                 }
             }
         }

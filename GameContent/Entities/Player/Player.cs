@@ -34,11 +34,10 @@ public class EPlayer : ECharacter
 
     public override void Tick(float delta)
     {
-        base.Tick(delta); 
+        base.Tick(delta);
         _lr = 0;
         if (InputManager.IsKeyDown(Keys.A) == true)
         {
-            GameClient.RegisterObject(new Item("basepick", ID.ItemID.GetItem("basepick"), Position));
             _lr = -1;
         }
         if (InputManager.IsKeyDown(Keys.D) == true)
@@ -46,6 +45,12 @@ public class EPlayer : ECharacter
             _lr = 1;
         }
         AddMovementInput(_lr);
+
+        
+        if(InputManager.IsKeyDown(Keys.G))
+        {
+            GameClient.RegisterObject(new Item("basepick", ID.ItemID.GetItem("basepick"), Position));
+        }
 
         if (InputManager.IsKeyDown(Keys.Space) == true)
         {

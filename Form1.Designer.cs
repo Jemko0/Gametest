@@ -30,7 +30,7 @@
         {
             label1 = new Label();
             RenderThread = new System.ComponentModel.BackgroundWorker();
-            listView1 = new ListView();
+            listBox1 = new ListBox();
             SuspendLayout();
             // 
             // label1
@@ -43,13 +43,13 @@
             label1.TabIndex = 0;
             label1.Text = "label1";
             // 
-            // listView1
+            // listBox1
             // 
-            listView1.Location = new Point(12, 12);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(495, 82);
-            listView1.TabIndex = 1;
-            listView1.UseCompatibleStateImageBehavior = false;
+            listBox1.FormattingEnabled = true;
+            listBox1.Location = new Point(12, 12);
+            listBox1.Name = "listBox1";
+            listBox1.Size = new Size(871, 104);
+            listBox1.TabIndex = 2;
             // 
             // GameClient
             // 
@@ -57,7 +57,7 @@
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(1280, 720);
-            Controls.Add(listView1);
+            Controls.Add(listBox1);
             Controls.Add(label1);
             HelpButton = true;
             Name = "GameClient";
@@ -84,6 +84,6 @@
 
         private Label label1;
         public System.ComponentModel.BackgroundWorker RenderThread;
-        private static ListView listView1;
+        public static ListBox listBox1;
     }
 }
