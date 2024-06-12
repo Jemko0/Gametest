@@ -29,14 +29,9 @@ namespace Object.Entity
             ticking = true;
         }
 
-        public virtual void SetPosition(Vector2 newpos)
+        public static void SetPosition(Vector2 newpos, EEntity e)
         {
-            Position = newpos;
-        }
-
-        public virtual void AddWorldOffset(Vector2 newoffset)
-        {
-            Position += newoffset;
+            e.Position = newpos;
         }
 
         public void InitializeEntity(Vector2 Pos, string EntityID)

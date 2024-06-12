@@ -1,5 +1,6 @@
 using Game;
 using Game.Global;
+using Gametest;
 using Gametest.GameContent.Gameplay;
 
 namespace Object.Entity;
@@ -28,6 +29,7 @@ public class EPlayer : ECharacter
         }
 
         helditem = ID.ItemID.GetItem(inv.items[selecteditem].id)._class;
+        helditem.pickedup = true;
     }
 
     public override void Tick(float delta)
@@ -36,6 +38,7 @@ public class EPlayer : ECharacter
         _lr = 0;
         if (InputManager.IsKeyDown(Keys.A) == true)
         {
+            GameClient.RegisterObject(new Item("basepick", ID.ItemID.GetItem("basepick"), Position));
             _lr = -1;
         }
         if (InputManager.IsKeyDown(Keys.D) == true)

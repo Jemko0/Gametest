@@ -38,7 +38,7 @@ namespace Object.Entity
 
             if (inputX == 0)
             {
-                    velocity.X /= 1 + odelta * 8;
+                    velocity.X /= 1 + odelta * 6;
             }
 
             EngineStructs.ECollisionResult collisionResult = CheckCollisions();
