@@ -38,6 +38,13 @@ namespace Game
 
         public partial class ItemID
         {
+            public struct InvItemData()
+            {
+                public string id;
+                public int amount;
+                public string add_data;
+            }
+
             public struct ItemData()
             {
                 public string id;
@@ -61,9 +68,9 @@ namespace Game
 
                     case "basepick":
                         i.name = "basepick";
-                        i._class = new Item("basepick");
                         i.tooltip = "base";
                         i.sprite = Resources.itempickbase;
+                        i._class = new Item("basepick", i);
                         return i;
                 }
             }

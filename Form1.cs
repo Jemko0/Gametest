@@ -6,6 +6,9 @@ using Gametest.GameContent.World;
 using Engine;
 using System.Runtime.Intrinsics;
 using System.ComponentModel;
+using Gametest.GameContent.Gameplay;
+using Accessibility;
+using Game;
 
 namespace Gametest
 {
@@ -97,7 +100,6 @@ namespace Gametest
         private void Render(object sender, PaintEventArgs e)
         {
             int rob;
-            RenderThread.RunWorkerAsync();
             rob = Renderer.Render(sender, e, this);
             EndFPSMeasure(rob);
         }
@@ -111,6 +113,15 @@ namespace Gametest
         private void GameClient_MouseDown(object sender, MouseEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine(e.Location.X - GameClient.cam.position.X);
+        }
+
+        public static void SetInventoryUI(Inventory _i)
+        {
+            listView1.Clear();
+            foreach(var item in _i.items)
+            {
+                listView1.Items.Add(new ListViewItem(ID.ItemID.GetItem(item.id).name));
+            }
         }
     }
 }

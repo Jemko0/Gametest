@@ -1,7 +1,3 @@
-using Microsoft.VisualBasic.ApplicationServices;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-
 namespace Gametest
 {
     internal static class Program

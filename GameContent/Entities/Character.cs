@@ -9,7 +9,7 @@ namespace Object.Entity
         public float accel = 2048f;
         public float speed = 300f;
         public bool grounded = false;
-        public float gravity = 500f;
+        public float gravity = Game.GameProperties.gravity;
         public float air_decel = 0.99f;
         public float grounded_decel = 0.89f;
         public short Health;
@@ -38,7 +38,7 @@ namespace Object.Entity
 
             if (inputX == 0)
             {
-                    velocity.X /= 1.05f;
+                    velocity.X /= 1 + odelta * 8;
             }
 
             EngineStructs.ECollisionResult collisionResult = CheckCollisions();

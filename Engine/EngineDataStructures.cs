@@ -73,7 +73,6 @@ namespace Engine.Data
 
             return result;
         }
-
         public static float Lerp(float a, float b, float f)
         {
             float min;

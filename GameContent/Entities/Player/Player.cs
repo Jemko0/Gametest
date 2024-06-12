@@ -1,3 +1,4 @@
+using Game;
 using Game.Global;
 using Gametest.GameContent.Gameplay;
 
@@ -15,7 +16,7 @@ public class EPlayer : ECharacter
         base.Init();
         ticking = true;
         collidable = false;
-        inv.AddItem("basepick");
+        inv.AddItem("basepick", 1, string.Empty);
         UpdateHeld();
     }
 
@@ -25,8 +26,8 @@ public class EPlayer : ECharacter
         {
             helditem.Destroy();
         }
-         
-        helditem = inv.items[selecteditem]._class;
+
+        helditem = ID.ItemID.GetItem(inv.items[selecteditem].id)._class;
     }
 
     public override void Tick(float delta)

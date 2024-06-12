@@ -30,6 +30,7 @@
         {
             label1 = new Label();
             RenderThread = new System.ComponentModel.BackgroundWorker();
+            listView1 = new ListView();
             SuspendLayout();
             // 
             // label1
@@ -42,13 +43,23 @@
             label1.TabIndex = 0;
             label1.Text = "label1";
             // 
+            // listView1
+            // 
+            listView1.Location = new Point(12, 12);
+            listView1.Name = "listView1";
+            listView1.Size = new Size(495, 82);
+            listView1.TabIndex = 1;
+            listView1.UseCompatibleStateImageBehavior = false;
+            // 
             // GameClient
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             ClientSize = new Size(1280, 720);
+            Controls.Add(listView1);
             Controls.Add(label1);
+            HelpButton = true;
             Name = "GameClient";
             Text = "2D Engine";
             TransparencyKey = Color.Fuchsia;
@@ -73,5 +84,6 @@
 
         private Label label1;
         public System.ComponentModel.BackgroundWorker RenderThread;
+        private static ListView listView1;
     }
 }

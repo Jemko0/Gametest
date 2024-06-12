@@ -1,4 +1,4 @@
-using Game.Global.var;
+using Game;
 using Gametest;
 
 namespace Object

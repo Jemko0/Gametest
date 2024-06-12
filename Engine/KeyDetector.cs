@@ -12,11 +12,6 @@ public class GameInput
     public bool IsKeyDown(System.Windows.Forms.Keys vKey)
     {
         var result = GetAsyncKeyState(vKey);
-
-        // If the key is NOT down, we will get 0. If the key is down,
-        // we will get IS_DOWN. However, since the method has functions
-        // that set other bits, it's best to "mask" for the particular
-        // "key is down" bit.
         return (result & IS_DOWN) > 0;
     }
 
