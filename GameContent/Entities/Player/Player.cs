@@ -4,6 +4,7 @@ using Gametest;
 using Engine.Data;
 using Gametest.GameContent.Gameplay;
 using Engine;
+using System.Numerics;
 
 namespace Object.Entity;
 
@@ -38,8 +39,8 @@ public class EPlayer : ECharacter
 
     public override void Tick(float delta)
     {
-        System.Diagnostics.Debug.WriteLine(Traces.isTraversible(EngineFunctions.TileSnap(Position.X), EngineFunctions.TileSnap(Position.Y)).ToString());
-        Renderer.DrawDebugPoint(new System.Numerics.Vector2((float)EngineFunctions.TileSnap(Position.X), (float)EngineFunctions.TileSnap(Position.Y + EDescription.HSize.Y)));
+        System.Diagnostics.Debug.WriteLine(Traces.isTraversible(EngineFunctions.TileSnap(Position.X - EDescription.HSize.X * Math.Clamp(-velocity.X, -1, 1)), EngineFunctions.TileSnap(Position.Y + EDescription.HSize.Y / 2)).ToString());
+        Renderer.DrawDebugPoint(new System.Numerics.Vector2((float)EngineFunctions.TileSnap(Position.X - EDescription.HSize.X * Math.Clamp(-velocity.X, -1, 1)), (float)EngineFunctions.TileSnap(Position.Y + EDescription.HSize.Y / 2)));
 
         base.Tick(delta);
         _lr = 0;
