@@ -10,10 +10,12 @@ namespace Game
         {
             public struct TileData()
             {
+                public bool solid;
                 public byte hardness;
                 public byte rarity;
                 public byte pickpower;
                 public string dropItemID;
+                public bool valid = true;
                 public Image sprite;
             }
 
@@ -23,9 +25,10 @@ namespace Game
                 switch (TileID)
                 {
                     default:
+                        t.valid = false;
                         return t;
-
                     case "t_dirt":
+                        t.solid = true;
                         t.dropItemID = "i_dirt";
                         t.sprite = Resources.tiledirt;
                         t.hardness = 15;

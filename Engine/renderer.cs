@@ -5,6 +5,8 @@ using Gametest;
 using Engine.Camera;
 using Game;
 using System.Runtime.CompilerServices;
+using System.Numerics;
+using Gametest.Properties;
 
 namespace Engine
 {
@@ -15,6 +17,7 @@ namespace Engine
         public static int ro;
         public static Dictionary<string, Image> SPRTCACHE_TILES = new Dictionary<string, Image>();
         public static Dictionary<int, Image> SPRTCACHE_ENTITY = new Dictionary<int, Image>();
+        public static List<Vector2> DBG_BUFFER = new List<Vector2>();
         public Renderer()
         {
         
@@ -27,8 +30,24 @@ namespace Engine
             //actual render stuff
             TilePass();
             ObjectPass();
+            DebugPass();
             return ro;
         }
+
+        public static void DrawDebugPoint(Vector2 worldpos)
+        {
+            DBG_BUFFER.Add(worldpos);
+        }
+
+        private static void DebugPass()
+        {
+            foreach(var draw in DBG_BUFFER.ToList())
+            {
+                e.Graphics.FillEllipse(new SolidBrush(Color.Red), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(draw, GameClient.cam, g)), new SizeF(10, 10)));
+                DBG_BUFFER.Remove(draw);
+            }
+        }
+
 
         private static void ObjectPass()
         {

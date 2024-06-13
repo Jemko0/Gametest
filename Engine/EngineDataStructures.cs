@@ -73,6 +73,13 @@ namespace Engine.Data
 
             return result;
         }
+
+        public static int TileSnap(float a)
+        {
+            int gridsize = 32;
+            return (int)(Math.Round(a / gridsize) * gridsize) + gridsize/2;
+        }
+
         public static float Lerp(float a, float b, float f)
         {
             float min;

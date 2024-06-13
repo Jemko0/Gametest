@@ -1,5 +1,6 @@
 ﻿using Object.Entity;
 using Game;
+using Gametest;
 
 namespace Object.Entity
 {
@@ -9,6 +10,15 @@ namespace Object.Entity
         public ETile(string id)
         {
             SetTileDefaults(id);
+        }
+
+        public static string GetTileAt(Engine.Data.EngineStructs.IntVector2 pos)
+        {
+            if (GameClient.worldtiles.ContainsKey(pos))
+            {
+                return GameClient.worldtiles[pos];
+            }
+            return null;
         }
 
         public ETile(string id, int x, int y)

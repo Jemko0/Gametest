@@ -1,7 +1,9 @@
 using Game;
 using Game.Global;
 using Gametest;
+using Engine.Data;
 using Gametest.GameContent.Gameplay;
+using Engine;
 
 namespace Object.Entity;
 
@@ -31,10 +33,14 @@ public class EPlayer : ECharacter
 
         helditem = ID.ItemID.GetItem(inv.items[selecteditem].id)._class;
         helditem.pickedup = true;
+        helditem.parent = this;
     }
 
     public override void Tick(float delta)
     {
+        System.Diagnostics.Debug.WriteLine(Traces.isTraversible(EngineFunctions.TileSnap(Position.X), EngineFunctions.TileSnap(Position.Y)).ToString());
+        Renderer.DrawDebugPoint(new System.Numerics.Vector2((float)EngineFunctions.TileSnap(Position.X), (float)EngineFunctions.TileSnap(Position.Y + EDescription.HSize.Y)));
+
         base.Tick(delta);
         _lr = 0;
         if (InputManager.IsKeyDown(Keys.A) == true)

@@ -12,6 +12,7 @@ namespace Object.Entity
     public class EEntity : EObject
     {
         public bool active;
+        public EEntity parent;
         public Game.ID.EntityID.EntityDescription EDescription;
         public Vector2 Position;
         public Vector2 velocity;
@@ -52,8 +53,16 @@ namespace Object.Entity
 
         public virtual void ETickMovement()
         {
-            Position.X += velocity.X * odelta;
-            Position.Y += velocity.Y * odelta;
+            if(parent != null)
+            {
+                Position = parent.Position;
+            }
+            else
+            {
+                Position.X += velocity.X * odelta;
+                Position.Y += velocity.Y * odelta;
+            }
+            
         }
         public virtual EngineStructs.ECollisionResult CheckCollisions()
         {
