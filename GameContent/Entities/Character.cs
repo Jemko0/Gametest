@@ -62,10 +62,7 @@ namespace Object.Entity
 
                     if(grounded)
                     {
-                        if(collisionResult.normal == new Vector2(0, -1))
-                        {
                             velocity.Y = 0f;
-                        }
                         //THitResult Ysnap = Traces.TLineTrace_naive(new Vector2(Position.X + (Math.Clamp(EDescription.HSize.X * Vector2.Normalize(velocity).X, 0f, 256f)), Position.Y), new Vector2(0, 1), 8f, true);
                         //Position.Y = EngineFunctions.TileSnap(Ysnap.HitLocation.Y - EDescription.HSize.Y) + 3.5f;
                         
