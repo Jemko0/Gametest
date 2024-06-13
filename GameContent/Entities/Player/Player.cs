@@ -14,14 +14,13 @@ public class EPlayer : ECharacter
     public Inventory inv = new Inventory();
     public int selecteditem;
     public Item helditem;
-    public float _lr = 0;
+    private float _lr = 0;
     public override void Init()
     {
         base.Init();
         ticking = true;
         collidable = false;
         gravitymult = 3.0f;
-        inv.AddItem("basepick", 1, string.Empty);
         UpdateHeld();
     }
 
@@ -31,16 +30,17 @@ public class EPlayer : ECharacter
         {
             helditem.Destroy();
         }
-
-        helditem = ID.ItemID.GetItem(inv.items[selecteditem].id)._class;
-        helditem.pickedup = true;
-        helditem.parent = this;
+        if(inv.items.Count > selecteditem)
+        {
+            helditem = ID.ItemID.GetItem(inv.items[selecteditem].id)._class;
+            helditem.pickedup = true;
+            helditem.parent = this;
+        }
     }
 
     public override void Tick(float delta)
     {
-        System.Diagnostics.Debug.WriteLine(Traces.isTraversible(EngineFunctions.TileSnap(Position.X - EDescription.HSize.X * Math.Clamp(-velocity.X, -1, 1)), EngineFunctions.TileSnap(Position.Y + EDescription.HSize.Y / 2)).ToString());
-        Renderer.DrawDebugPoint(new System.Numerics.Vector2((float)EngineFunctions.TileSnap(Position.X - EDescription.HSize.X * Math.Clamp(-velocity.X, -1, 1)), (float)EngineFunctions.TileSnap(Position.Y + EDescription.HSize.Y / 2)));
+        //Renderer.DrawDebugPoint(new System.Numerics.Vector2((float)EngineFunctions.TileSnap(Position.X - EDescription.HSize.X * Math.Clamp(-velocity.X, -1, 1)), (float)EngineFunctions.TileSnap(Position.Y + EDescription.HSize.Y / 2)));
 
         base.Tick(delta);
         _lr = 0;

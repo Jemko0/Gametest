@@ -7,6 +7,7 @@ using Engine;
 using Gametest.GameContent.Gameplay;
 using Game;
 using System.Runtime.CompilerServices;
+using System.Numerics;
 
 namespace Gametest
 {
@@ -16,6 +17,7 @@ namespace Gametest
         public static Dictionary<int, EObject> objs = new Dictionary<int, EObject>();
         public static Dictionary<EngineStructs.IntVector2, string> worldtiles = new Dictionary<EngineStructs.IntVector2, string>();
         public static Camera cam;
+        public static EPlayer player;
         private SceneManager sm;
         public GameClient()
         {
@@ -29,7 +31,7 @@ namespace Gametest
 
         public void CreatePlyAndCam()
         {
-            EPlayer player = new EPlayer();
+            player = new EPlayer();
             player.InitializeEntity(new System.Numerics.Vector2(400, -800), "player");
 
             cam = new Camera(player.Position);
@@ -47,6 +49,10 @@ namespace Gametest
             {
                 EngineLoop();
                 Invalidate(); //render
+                if (dtpos1 != null && dtpos2 != null)
+                {
+                    Traces.TLineTrace_naive(dtpos1, dtpos2 - dtpos1, Vector2.Distance(dtpos1, dtpos2), true);
+                }
             }
         }
 
@@ -86,7 +92,8 @@ namespace Gametest
                 "FPS: " + Math.Floor(1 / delta).ToString() + "\n"
                 + "DELTA: " + (delta * 1000).ToString() + "\n"
                 + "OBJ:" + objs.Count.ToString() + "\n"
-                + "RO:" + rendobj.ToString();
+                + "PPOS:" + player.Position + "\n"
+                + "PVEL:" + player.velocity;
 
             return;
         }
@@ -121,10 +128,20 @@ namespace Gametest
             this.DoubleBuffered = true;
         }
 
-
+        public static Vector2 dtpos1;
+        public static Vector2 dtpos2;
         private void GameClient_MouseDown(object sender, MouseEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(e.Location.X - GameClient.cam.position.X);
+
+            if (e.Button == MouseButtons.Left)
+            {
+                dtpos1 = EngineFunctions.ScreenToWorldCoordinates(e.Location);
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+                dtpos2 = EngineFunctions.ScreenToWorldCoordinates(e.Location);
+            }
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Gametest
             // 
             label1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             label1.AutoSize = true;
-            label1.Location = new Point(1172, 629);
+            label1.Location = new Point(1103, 545);
             label1.Name = "label1";
             label1.Size = new Size(50, 20);
             label1.TabIndex = 0;
@@ -66,9 +66,7 @@ namespace Gametest
             // 
             // GameClient
             // 
-            AutoScaleDimensions = new SizeF(120F, 120F);
-            AutoScaleMode = AutoScaleMode.Dpi;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(1280, 720);
             Controls.Add(pictureBox1);
             Controls.Add(label1);

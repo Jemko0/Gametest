@@ -7,6 +7,7 @@ using Game;
 using System.Runtime.CompilerServices;
 using System.Numerics;
 using Gametest.Properties;
+using Gametest.GameContent.World;
 
 namespace Engine
 {
@@ -17,7 +18,7 @@ namespace Engine
         public static int ro;
         public static Dictionary<string, Image> SPRTCACHE_TILES = new Dictionary<string, Image>();
         public static Dictionary<int, Image> SPRTCACHE_ENTITY = new Dictionary<int, Image>();
-        public static List<Vector2> DBG_BUFFER = new List<Vector2>();
+        public static Dictionary<Vector2, Color> DBG_BUFFER = new Dictionary<Vector2, Color>();
         public Renderer()
         {
         
@@ -34,18 +35,25 @@ namespace Engine
             return ro;
         }
 
-        public static void DrawDebugPoint(Vector2 worldpos)
+        public static void DrawDebugPoint(Vector2 worldpos, Color color)
         {
-            DBG_BUFFER.Add(worldpos);
+            if(!DBG_BUFFER.ContainsKey(worldpos))
+            {
+                DBG_BUFFER.Add(worldpos, color);
+            }
+            
         }
 
         private static void DebugPass()
         {
-            foreach(var draw in DBG_BUFFER.ToList())
+            if(DBG_BUFFER.Count > 0)
             {
-                e.Graphics.FillEllipse(new SolidBrush(Color.Red), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(draw, GameClient.cam, g)), new SizeF(10, 10)));
-                DBG_BUFFER.Remove(draw);
-            }
+                foreach(var draw in DBG_BUFFER.Keys)
+                {
+                    e.Graphics.FillEllipse(new SolidBrush(DBG_BUFFER[draw]), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(draw, GameClient.cam, g)), new SizeF(10, 10)));
+                    DBG_BUFFER.Remove(draw);
+                }
+            }    
         }
 
 
@@ -84,7 +92,7 @@ namespace Engine
                 {
                     if(SPRTCACHE_TILES.ContainsKey(tile.Value))
                     {
-                        e.Graphics.DrawImage(SPRTCACHE_TILES[tile.Value], new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(new System.Numerics.Vector2(tile.Key.x, tile.Key.y), GameClient.cam, g)), new SizeF(32, 32)));
+                        e.Graphics.DrawImage(SPRTCACHE_TILES[tile.Value], new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(new System.Numerics.Vector2((float)(tile.Key.x - Worldgen.tilesize / 3f), (float)(tile.Key.y - Worldgen.tilesize / 3f)), GameClient.cam, g)), new SizeF(32, 32)));
                     }
                     else
                     {

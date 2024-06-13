@@ -1,4 +1,4 @@
-using Engine.Camera;
+using Game;
 using Gametest;
 using Object;
 using Object.Entity;
@@ -7,6 +7,12 @@ using System.Runtime.InteropServices;
 
 namespace Engine.Data
 {
+    public struct TraverseResult
+    {
+        public bool traversable;
+        public ID.TileID.TileData tile;
+    }
+
     public class EngineWin32
     {
         [StructLayout(LayoutKind.Sequential)]
@@ -26,7 +32,7 @@ namespace Engine.Data
 
     public static class EngineStructs
     {
-
+        
         public struct IntVector2(int x, int y)
         {
             public int x = x;
@@ -36,6 +42,8 @@ namespace Engine.Data
         public struct ECollisionResult()
         {
             public bool collision = false;
+            public Vector2 collisionlocation;
+            public Vector2 normal;
             public EObject hitobject = null;
         }
 
@@ -74,10 +82,26 @@ namespace Engine.Data
             return result;
         }
 
+        public static Vector2 ScreenToWorldCoordinates(Point ScreenPosition)
+        {
+            return ScreenToWorldCoordinates(new Vector2(ScreenPosition.X, ScreenPosition.Y));
+        }
+
+        public static Vector2 ScreenToWorldCoordinates(Vector2 ScreenPosition)
+        {
+            return new Vector2(ScreenPosition.X + GameClient.cam.position.X - 570, ScreenPosition.Y + GameClient.cam.position.Y - 450);
+        }
+
         public static int TileSnap(float a)
         {
             int gridsize = 32;
             return (int)(Math.Round(a / gridsize) * gridsize);
+        }
+
+        public static Vector2 TileSnap(Vector2 a)
+        {
+            int gridsize = 32;
+            return new Vector2((int)(Math.Round(a.X / gridsize) * gridsize), (int)(Math.Round(a.Y / gridsize) * gridsize));
         }
 
         public static float Lerp(float a, float b, float f)

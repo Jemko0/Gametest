@@ -3,6 +3,7 @@ using System.Numerics;
 using Engine.Data;
 using Engine;
 using System;
+using Gametest.GameContent.World;
 
 namespace Object.Entity
 {
@@ -95,15 +96,32 @@ namespace Object.Entity
                 }
             }
 
+
             foreach (var tile in GameClient.worldtiles)
             {
-                if (Position.Y + EDescription.HSize.Y > tile.Key.y
-                            && Position.Y < tile.Key.y + 16
-                            && Position.X + EDescription.HSize.X > tile.Key.x
-                            && Position.X < tile.Key.x + 16
-                            )
+                if (Position.Y + EDescription.HSize.Y > tile.Key.y - Worldgen.tilesize / 3f
+                    && Position.Y < tile.Key.y + 16 - Worldgen.tilesize / 3f
+                    && Position.X + EDescription.HSize.X > tile.Key.x - Worldgen.tilesize / 3f
+                    && Position.X < tile.Key.x + 16 - Worldgen.tilesize / 3f
+                    )
                 {
                     cr.collision = true;
+                }
+            }
+
+            THitResult tile_hr = new THitResult();
+
+            if (velocity.Length() > 0.05f)
+            {
+                tile_hr = Traces.TLineTrace_naive(Position + new Vector2(EDescription.HSize.X/2, EDescription.HSize.Y/2), new Vector2(velocity.X, 0), 2f + velocity.Length() / 100);
+
+                if(tile_hr.Hit && tile_hr.tile.valid)
+                {
+                    Vector2 localtpos = new Vector2(tile_hr.HitLocation.X % Worldgen.tilesize, tile_hr.HitLocation.Y % Worldgen.tilesize);
+                
+                    cr.collisionlocation = tile_hr.HitLocation;
+                    cr.normal = tile_hr.normal;
+
                     return cr;
                 }
             }

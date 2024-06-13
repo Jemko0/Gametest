@@ -1,4 +1,7 @@
 using Engine.Data;
+using Gametest;
+using System.Numerics;
+using Game;
 namespace Object.Entity
 {
     /// <summary>
@@ -57,16 +60,25 @@ namespace Object.Entity
                 {
                     grounded = true;
 
-                    //boonce with fallback restitution
-                    if(collisionResult.hitobject != null)
+                    if(grounded)
                     {
-                        velocity.Y = -Math.Abs(velocity.Y * collisionResult.hitobject.restitution);
+                        if(collisionResult.normal == new Vector2(0, -1))
+                        {
+                            velocity.Y = 0f;
+                        }
+                        //THitResult Ysnap = Traces.TLineTrace_naive(new Vector2(Position.X + (Math.Clamp(EDescription.HSize.X * Vector2.Normalize(velocity).X, 0f, 256f)), Position.Y), new Vector2(0, 1), 8f, true);
+                        //Position.Y = EngineFunctions.TileSnap(Ysnap.HitLocation.Y - EDescription.HSize.Y) + 3.5f;
+                        
+
                     }
-                    else
-                    {
-                        velocity.Y = -Math.Abs(velocity.Y * 0.25f); ;
-                    }
+                    
                 }
+
+            }
+            if(collisionResult.normal.X != 0)
+            {
+                //Position.X = collisionResult.collisionlocation.X;
+                velocity.X = collisionResult.normal.X;
             }
         }
 
