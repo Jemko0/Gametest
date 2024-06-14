@@ -36,7 +36,7 @@ namespace Object.Entity
 
         private void Move(float inputX, float inputY)
         {
-            grounded = false;
+            grounded = true;
 
             velocity.X += (accel * inputX) * odelta;
             velocity.X = Math.Clamp(velocity.X, -speed, speed);
@@ -54,23 +54,11 @@ namespace Object.Entity
                 return;
 
             }
-            else
+
+            if (collisionResult.collision)
             {
-                if (collisionResult.collision)
-                {
-                    grounded = true;
-
-                    if(grounded)
-                    {
-                            velocity.Y = 0f;
-                        //THitResult Ysnap = Traces.TLineTrace_naive(new Vector2(Position.X + (Math.Clamp(EDescription.HSize.X * Vector2.Normalize(velocity).X, 0f, 256f)), Position.Y), new Vector2(0, 1), 8f, true);
-                        //Position.Y = EngineFunctions.TileSnap(Ysnap.HitLocation.Y - EDescription.HSize.Y) + 3.5f;
-                        
-
-                    }
-                    
-                }
-
+                grounded = true;
+                velocity.Y = 0f;
             }
             if(collisionResult.normal.X != 0)
             {

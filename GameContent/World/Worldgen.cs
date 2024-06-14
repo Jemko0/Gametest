@@ -18,9 +18,9 @@ namespace Gametest.GameContent.World
                     {
                         if(noise.GetNoise(x * tilesize, y * tilesize) > 0f)
                         {
-                            if (!GameClient.worldtiles.ContainsKey(new EngineStructs.IntVector2(x * tilesize, y * tilesize)))
+                            if (!GameClient.worldtiles.ContainsKey(new EngineStructs.IntVector2(x * tilesize, y * tilesize + 500)))
                             {
-                                GameClient.worldtiles.Add(new EngineStructs.IntVector2(x * tilesize, y * tilesize), "t_dirt");
+                                GameClient.worldtiles.Add(new EngineStructs.IntVector2(x * tilesize, y * tilesize + 500), "t_dirt");
                             }
                         }
                     }

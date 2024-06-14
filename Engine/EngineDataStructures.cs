@@ -13,6 +13,63 @@ namespace Engine.Data
         public ID.TileID.TileData tile;
     }
 
+    public enum DebugDrawingType
+    {
+        Point,
+        Line,
+        Rect,
+    }
+
+    public struct DebugDrawing
+    {
+        public DebugDrawing(DebugDrawingType type, RectangleF rect, Color color)
+        {
+            this.drawtype = type;
+            this.rect = rect;
+            this.color = color;
+        }
+
+        public DebugDrawing(DebugDrawingType type, PointF p1, PointF p2, Color color)
+        {
+            this.drawtype = type;
+            this.p1 = p1;
+            this.p2 = p2;
+            this.color = color;
+        }
+
+        public DebugDrawing(DebugDrawingType type, Vector2 p1, Vector2 p2, Color color)
+        {
+            this.drawtype = type;
+            this.p1 = new PointF(p1);
+            this.p2 = new PointF(p2);
+            this.color = color;
+        }
+
+        public DebugDrawing(DebugDrawingType type, PointF pos, SizeF size, Color color)
+        {
+            this.drawtype = type;
+            this.pos = pos;
+            this.size = size;
+            this.color = color;
+        }
+
+        public DebugDrawing(DebugDrawingType type, Vector2 pos, SizeF size, Color color)
+        {
+            this.drawtype = type;
+            this.pos = new PointF(pos);
+            this.size = size;
+            this.color = color;
+        }
+
+        public DebugDrawingType drawtype;
+        public PointF pos;
+        public Color color;
+        public SizeF size;
+        public PointF p1;
+        public PointF p2;
+        public RectangleF rect;
+    }
+
     public class EngineWin32
     {
         [StructLayout(LayoutKind.Sequential)]
@@ -74,7 +131,7 @@ namespace Engine.Data
 
     public class EngineFunctions
     {
-        public static Vector2 GetRenderTranslation(Vector2 enitityposition, Engine.Camera.Camera cam, GameClient gc)
+        public static Vector2 GetRenderTranslation(Vector2 enitityposition, Engine.Camera.Camera cam)
         {
             Vector2 result = new Vector2();
             result = new Vector2((int)enitityposition.X - cam.position.X + 550, (int)(enitityposition.Y - cam.position.Y + 400));
@@ -112,6 +169,13 @@ namespace Engine.Data
             min = Math.Min(a, b);
             max = Math.Max(a, b);
             return Math.Clamp((a * (1.0f - f)) + (b * f), min, max);
+        }
+
+        public static void swap<T>(ref T a, ref T b)
+        {
+            T a1 = a;
+            a = b;
+            b = a1;
         }
     }
 }

@@ -49,9 +49,17 @@ namespace Gametest
             {
                 EngineLoop();
                 Invalidate(); //render
-                if (dtpos1 != null && dtpos2 != null)
+                if (dtpos1 != Vector2.Zero && dtpos2 != Vector2.Zero)
                 {
-                    Traces.TLineTrace_naive(dtpos1, dtpos2 - dtpos1, Vector2.Distance(dtpos1, dtpos2), true);
+                    Vector2 cp;
+                    Vector2 cn;
+                    float t;
+                    Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Line, dtpos1, dtpos2, Color.AliceBlue));
+
+                    if (CollisionDetections.RayVRect(new Ray(dtpos1, dtpos2 - dtpos1), player.GetRect(), out cp, out cn, out t) && t < 1.0f)
+                    {
+                        Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Point, cp, new SizeF(16, 16), Color.Red));
+                    }
                 }
             }
         }

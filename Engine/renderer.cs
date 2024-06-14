@@ -18,7 +18,7 @@ namespace Engine
         public static int ro;
         public static Dictionary<string, Image> SPRTCACHE_TILES = new Dictionary<string, Image>();
         public static Dictionary<int, Image> SPRTCACHE_ENTITY = new Dictionary<int, Image>();
-        public static Dictionary<Vector2, Color> DBG_BUFFER = new Dictionary<Vector2, Color>();
+        public static List<DebugDrawing> DBG_BUFFER = new List<DebugDrawing>();
         public Renderer()
         {
         
@@ -35,22 +35,40 @@ namespace Engine
             return ro;
         }
 
-        public static void DrawDebugPoint(Vector2 worldpos, Color color)
+        public static void DrawDebugPoint(DebugDrawing drawing)
         {
-            if(!DBG_BUFFER.ContainsKey(worldpos))
+            if(!DBG_BUFFER.Contains(drawing))
             {
-                DBG_BUFFER.Add(worldpos, color);
-            }
-            
+                DBG_BUFFER.Add(drawing);
+            }  
         }
 
         private static void DebugPass()
         {
             if(DBG_BUFFER.Count > 0)
             {
-                foreach(var draw in DBG_BUFFER.Keys)
+                foreach(var draw in DBG_BUFFER.ToList())
                 {
-                    e.Graphics.FillEllipse(new SolidBrush(DBG_BUFFER[draw]), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(draw, GameClient.cam, g)), new SizeF(10, 10)));
+                    switch(draw.drawtype)
+                    {
+                        default:
+                            return;
+
+                        case DebugDrawingType.Point:
+                            e.Graphics.FillEllipse(new SolidBrush(draw.color), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(new Vector2(draw.pos.X, draw.pos.Y), GameClient.cam)), new SizeF(10, 10)));
+
+                            break;
+
+                        case DebugDrawingType.Line:
+                            e.Graphics.DrawLine(new Pen(draw.color), new PointF(EngineFunctions.GetRenderTranslation(new Vector2(draw.p1.X, draw.p1.Y), GameClient.cam)), new PointF(EngineFunctions.GetRenderTranslation(new Vector2(draw.p2.X, draw.p2.Y), GameClient.cam)));
+
+                            break;
+
+                        case DebugDrawingType.Rect:
+                            e.Graphics.FillRectangle(new SolidBrush(draw.color), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(new Vector2(draw.rect.X, draw.rect.Y), GameClient.cam)), new SizeF(draw.rect.Size)));
+
+                            break;
+                    }
                     DBG_BUFFER.Remove(draw);
                 }
             }    
@@ -71,12 +89,13 @@ namespace Engine
                         ro++;
                         if (en.EDescription.Sprite != null)
                         {
-                            e.Graphics.DrawImage(en.EDescription.Sprite, new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en.Position, GameClient.cam, g)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
+                            //e.Graphics.DrawImage(en.EDescription.Sprite, en.GetRect());
+                            e.Graphics.DrawImage(en.EDescription.Sprite, new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en.Position, GameClient.cam)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
                         }
                         else
                         {
-                            e.Graphics.FillRectangle(new SolidBrush(Color.Black), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en.Position, GameClient.cam, g)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
-                            e.Graphics.FillEllipse(new SolidBrush(Color.Red), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en.Position, GameClient.cam, g)), new SizeF(10, 10)));
+                            e.Graphics.FillRectangle(new SolidBrush(Color.Black), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en.Position, GameClient.cam)), new SizeF(en.EDescription.HSize.X, en.EDescription.HSize.Y)));
+                            e.Graphics.FillEllipse(new SolidBrush(Color.Red), new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(en.Position, GameClient.cam)), new SizeF(10, 10)));
                         }
                     }
                 }
@@ -92,7 +111,7 @@ namespace Engine
                 {
                     if(SPRTCACHE_TILES.ContainsKey(tile.Value))
                     {
-                        e.Graphics.DrawImage(SPRTCACHE_TILES[tile.Value], new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(new System.Numerics.Vector2((float)(tile.Key.x - Worldgen.tilesize / 3f), (float)(tile.Key.y - Worldgen.tilesize / 3f)), GameClient.cam, g)), new SizeF(32, 32)));
+                        e.Graphics.DrawImage(SPRTCACHE_TILES[tile.Value], new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(new System.Numerics.Vector2((float)(tile.Key.x - Worldgen.tilesize / 3f), (float)(tile.Key.y - Worldgen.tilesize / 3f)), GameClient.cam)), new SizeF(32, 32)));
                     }
                     else
                     {

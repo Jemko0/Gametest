@@ -109,9 +109,7 @@ namespace Gametest
 #if DEBUG
                 if (dbg)
                 {
-                    Renderer.DrawDebugPoint(startpos, Color.Aqua);
-                    Renderer.DrawDebugPoint(hitpos, Color.Green);
-                    Renderer.DrawDebugPoint(hit.EndLoc, Color.Red);
+
                 }
 #endif
                 step++;
