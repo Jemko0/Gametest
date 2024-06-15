@@ -25,8 +25,8 @@ namespace Object.Entity
 
         public override void Tick(float delta)
         {
-            base.Tick(delta);
             Move(_input, 0);
+            base.Tick(delta);
         }
 
         public void AddMovementInput(float lr_input)
@@ -43,28 +43,19 @@ namespace Object.Entity
 
             if (inputX == 0)
             {
-                    velocity.X /= 1 + odelta * 6;
+                velocity.X /= 1 + odelta * 6;
             }
 
-            EngineStructs.ECollisionResult collisionResult = CheckCollisions();
-
-            if (!collisionResult.collision)
-            {
-                velocity.Y += Game.GameProperties.gravity * gravitymult * odelta;
-                return;
-
-            }
-
-            if (collisionResult.collision)
+            EngineStructs.ECollisionResult cresult = CheckCollisions();
+            if (cresult.collided)
             {
                 grounded = true;
-                velocity.Y = 0f;
+                Position.Y = cresult.location.Y;
+                velocity.Y = 0;
+                //velocity += cresult.normal * new Vector2(Math.Abs(velocity.X), Math.Abs(velocity.Y)) * (1 - cresult.time);
+                return;
             }
-            if(collisionResult.normal.X != 0)
-            {
-                //Position.X = collisionResult.collisionlocation.X;
-                velocity.X = collisionResult.normal.X;
-            }
+            velocity.Y += Game.GameProperties.gravity * gravitymult * odelta;
         }
 
         public void Jump()

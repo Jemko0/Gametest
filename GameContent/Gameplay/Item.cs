@@ -47,7 +47,7 @@ namespace Object.Entity
             {
                 velocity.X /= 1 + odelta * 6;
                 EngineStructs.ECollisionResult collisionResult = CheckCollisions();
-                if (!collisionResult.collision)
+                if (!collisionResult.collided)
                 {
                     velocity.Y += Game.GameProperties.gravity * odelta;
                     return;

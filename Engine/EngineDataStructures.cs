@@ -98,10 +98,10 @@ namespace Engine.Data
 
         public struct ECollisionResult()
         {
-            public bool collision = false;
-            public Vector2 collisionlocation;
+            public bool collided = false;
+            public Vector2 location;
             public Vector2 normal;
-            public EObject hitobject = null;
+            public float time;
         }
 
         public struct WTile(short inx, short iny)

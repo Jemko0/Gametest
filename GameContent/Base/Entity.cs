@@ -81,7 +81,8 @@ namespace Object.Entity
         public EngineStructs.ECollisionResult Collision()
         {
             EngineStructs.ECollisionResult cr = new EngineStructs.ECollisionResult();
-            cr.collision = false;
+            cr.collided = false;
+            cr.time = 0;
 
             //entities
             //for (int i = 0; i < GameClient.objs.Count; i++)
@@ -114,24 +115,23 @@ namespace Object.Entity
             //tile.Key.x + 32 - Worldgen.tilesize / 3f
 
             //tile collision
-            Vector2 cp;
-            Vector2 cn;
-            float ct;
+            Vector2 cp, cn;
+            float ct = 0;
 
             foreach (var tile in GameClient.worldtiles)
             {
-                //if(GameClient.cam.PosInCamBounds(new Vector2(tile.Key.x, tile.Key.y)))
-                //{
-                //    //tile.Key returns 0???
-                //    Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Rect, new RectangleF(new PointF(tile.Key.x, tile.Key.y), new SizeF(32, 32)), Color.Red));
-                //    System.Diagnostics.Debug.WriteLine(tile.Key.x.ToString() + "//" + tile.Key.y.ToString());
-                //}
-                
-                if (CollisionDetections.DynamicRectVRect(new RectangleF(new PointF(Position.X, Position.Y), new SizeF(EDescription.HSize)), velocity, new RectangleF(new PointF(tile.Key.x, tile.Key.y), new SizeF(32, 32)), odelta, out cp, out cn, out ct))
+                if(GameClient.cam.PosInCamBounds(new Vector2(tile.Key.x, tile.Key.y)))
                 {
-                    cr.collision = true;
-                    return cr;
+                    if (CollisionDetections.DynamicRectVRect(new RectangleF(new PointF(Position.X, Position.Y), new SizeF(EDescription.HSize)), velocity, new RectangleF(new PointF(tile.Key.x, tile.Key.y), new SizeF(16, 16)), odelta, out cp, out cn, out ct))
+                    {
+                        cr.collided = true;
+                        cr.normal = cn;
+                        cr.location = cp;
+                        cr.time = ct;
+                        return cr;
+                    }
                 }
+               
             }
             return cr;
         }

@@ -1,4 +1,5 @@
 ﻿using Engine.Data;
+using System;
 using System.Diagnostics.Eventing.Reader;
 using System.Numerics;
 
@@ -26,12 +27,22 @@ namespace Engine
         public static bool RayVRect(Ray ray, RectangleF target,
             out Vector2 contact_point, out Vector2 contact_normal, out float t_hit_near)
         {
+            
+            //t_near    = intersection point
+            //t_far     = penetration point
+
             Vector2 t_near = (new Vector2(target.X, target.Y) - ray.origin) / ray.direction;
             Vector2 t_far = ((new Vector2(target.X, target.Y) + new Vector2(target.Size.Width, target.Size.Height)) - ray.origin) / ray.direction;
 
             contact_point = new Vector2(float.NaN, float.NaN);
             contact_normal = new Vector2(float.NaN, float.NaN);
             t_hit_near = float.NaN;
+
+            if (float.IsNaN(t_near.X) || float.IsNaN(t_near.Y)) { return false; }
+            if (float.IsNaN(t_far.X) || float.IsNaN(t_far.Y)) { return false; }
+
+            //Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Rect, target, Color.Red));
+            //Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Line, new PointF(ray.origin), new PointF(target.X, target.Y), Color.Blue));
 
             if (t_near.X > t_far.X)
             { EngineFunctions.swap(ref t_near.X, ref t_far.X); }
@@ -94,17 +105,18 @@ namespace Engine
             }
 
             RectangleF target_expanded = new RectangleF();
-            target_expanded.Size = (target.Size + In.Size);
+            target_expanded.X = target.X - In.Size.Width / 2;
+            target_expanded.Y = target.Y - In.Size.Height / 2;
+            target_expanded.Size = target.Size + In.Size;
 
-            Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Point, new PointF(new Vector2(In.X + In.Width / 2, In.Y + In.Height / 2)), new SizeF(16, 16), Color.Yellow));
-
-            if (RayVRect(new Ray(new Vector2(In.X, In.Y), Invel * elapsedtime), target_expanded,out contact_point,out contact_normal,out contact_time))
+            //Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Point, new PointF(new Vector2(In.X + In.Width / 2, In.Y + In.Height / 2)), new SizeF(16, 16), Color.Yellow));
+            
+            if (RayVRect(new Ray(new Vector2(In.X + In.Size.Width / 2, In.Y + In.Size.Height / 2), Invel * elapsedtime), target_expanded, out contact_point, out contact_normal, out contact_time))
             {
                 if (contact_time <= 1.0f)
                 {
                     return true;
                 }
-                Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Line, new PointF(In.X, In.Y), new PointF(contact_point), Color.Blue));
             }
             return false;
         }
