@@ -54,12 +54,17 @@ namespace Gametest
                     Vector2 cp;
                     Vector2 cn;
                     float t;
-                    Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Line, dtpos1, dtpos2, Color.AliceBlue));
 
-                    if (CollisionDetections.RayVRect(new Ray(dtpos1, dtpos2 - dtpos1), player.GetRect(), out cp, out cn, out t) && t < 1.0f)
+                    Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Line, dtpos1, dtpos2, Color.Black));
+
+                    foreach( var tile in worldtiles)
                     {
-                        Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Point, cp, new SizeF(16, 16), Color.Red));
+                        if (CollisionDetections.RayVRect(new Ray(dtpos1, dtpos2 - dtpos1), new RectangleF(tile.Key.x, tile.Key.y, 32, 32), out cp, out cn, out t) && t < 1.0f)
+                        {
+                            Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Rect, new RectangleF(tile.Key.x, tile.Key.y, 32, 32), Color.Red));
+                        }
                     }
+                    
                 }
             }
         }

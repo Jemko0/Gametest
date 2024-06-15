@@ -45,17 +45,15 @@ namespace Object.Entity
             {
                 velocity.X /= 1 + odelta * 6;
             }
-
+            
             EngineStructs.ECollisionResult cresult = CheckCollisions();
+            velocity.Y += Game.GameProperties.gravity * gravitymult * odelta;
             if (cresult.collided)
             {
                 grounded = true;
-                Position.Y = cresult.location.Y;
-                velocity.Y = 0;
-                //velocity += cresult.normal * new Vector2(Math.Abs(velocity.X), Math.Abs(velocity.Y)) * (1 - cresult.time);
+                velocity += cresult.normal * new Vector2(Math.Abs(velocity.X), Math.Abs(velocity.Y)) * (1 - cresult.time);
                 return;
             }
-            velocity.Y += Game.GameProperties.gravity * gravitymult * odelta;
         }
 
         public void Jump()

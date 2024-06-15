@@ -42,7 +42,6 @@ public class EPlayer : ECharacter
     {
         //Renderer.DrawDebugPoint(new System.Numerics.Vector2((float)EngineFunctions.TileSnap(Position.X - EDescription.HSize.X * Math.Clamp(-velocity.X, -1, 1)), (float)EngineFunctions.TileSnap(Position.Y + EDescription.HSize.Y / 2)));
 
-        base.Tick(delta);
         _lr = 0;
         if (InputManager.IsKeyDown(Keys.A) == true)
         {
@@ -54,8 +53,7 @@ public class EPlayer : ECharacter
         }
         AddMovementInput(_lr);
 
-        
-        if(InputManager.IsKeyDown(Keys.G))
+        if (InputManager.IsKeyDown(Keys.G))
         {
             GameClient.RegisterObject(new Item("basepick", ID.ItemID.GetItem("basepick"), Position));
         }
@@ -64,11 +62,7 @@ public class EPlayer : ECharacter
         {
             Jump();
         }
+        base.Tick(delta);
 
-        if(Position.Y > 1000000)
-        {
-            velocity.Y = 0;
-            Position = new System.Numerics.Vector2(400, -400);
-        }
     }
 }

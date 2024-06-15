@@ -122,7 +122,7 @@ namespace Object.Entity
             {
                 if(GameClient.cam.PosInCamBounds(new Vector2(tile.Key.x, tile.Key.y)))
                 {
-                    if (CollisionDetections.DynamicRectVRect(new RectangleF(new PointF(Position.X, Position.Y), new SizeF(EDescription.HSize)), velocity, new RectangleF(new PointF(tile.Key.x, tile.Key.y), new SizeF(16, 16)), odelta, out cp, out cn, out ct))
+                    if (CollisionDetections.DynamicRectVRect(new RectangleF(new PointF(Position.X, Position.Y), new SizeF(EDescription.HSize)), velocity, new RectangleF(new PointF(tile.Key.x, tile.Key.y), new SizeF(16, 16)), odelta, out cp, out cn, out ct) && ct < 1.0f)
                     {
                         cr.collided = true;
                         cr.normal = cn;

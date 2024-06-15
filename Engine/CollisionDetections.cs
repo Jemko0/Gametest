@@ -57,7 +57,7 @@ namespace Engine
                   t_hit_near = Math.Max(t_near.X, t_near.Y);
             float t_hit_far = Math.Min(t_far.X, t_far.Y);
 
-            if(t_hit_far < 0)
+            if(t_hit_near < -float.Epsilon)
             { return false; }
 
             contact_point = ray.origin + t_hit_near * ray.direction;
