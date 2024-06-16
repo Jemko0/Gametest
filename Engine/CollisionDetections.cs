@@ -50,14 +50,13 @@ namespace Engine
             if (t_near.Y > t_far.Y)
             { EngineFunctions.swap(ref t_near.Y, ref t_far.Y); }
 
-
             if(t_near.X > t_far.Y || t_near.Y > t_far.X)
-            {  return false; }
+            { return false; }
 
                   t_hit_near = Math.Max(t_near.X, t_near.Y);
             float t_hit_far = Math.Min(t_far.X, t_far.Y);
 
-            if(t_hit_near < -float.Epsilon)
+            if(t_hit_far < 0)
             { return false; }
 
             contact_point = ray.origin + t_hit_near * ray.direction;
@@ -88,7 +87,6 @@ namespace Engine
                     contact_normal.Y = -1;
                 }
             }
-
             return true;
         }
 
@@ -109,8 +107,8 @@ namespace Engine
             target_expanded.Y = target.Y - In.Size.Height / 2;
             target_expanded.Size = target.Size + In.Size;
 
-            //Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Point, new PointF(new Vector2(In.X + In.Width / 2, In.Y + In.Height / 2)), new SizeF(16, 16), Color.Yellow));
-            
+            Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Point, new PointF(new Vector2(In.X + In.Width / 2, In.Y + In.Height / 2)), new SizeF(16, 16), Color.Yellow));
+
             if (RayVRect(new Ray(new Vector2(In.X + In.Size.Width / 2, In.Y + In.Size.Height / 2), Invel * elapsedtime), target_expanded, out contact_point, out contact_normal, out contact_time))
             {
                 if (contact_time <= 1.0f)

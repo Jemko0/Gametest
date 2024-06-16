@@ -57,7 +57,7 @@ namespace Gametest
 
                     Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Line, dtpos1, dtpos2, Color.Black));
 
-                    foreach( var tile in worldtiles)
+                    foreach(var tile in worldtiles)
                     {
                         if (CollisionDetections.RayVRect(new Ray(dtpos1, dtpos2 - dtpos1), new RectangleF(tile.Key.x, tile.Key.y, 32, 32), out cp, out cn, out t) && t < 1.0f)
                         {
