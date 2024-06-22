@@ -1,6 +1,8 @@
 ﻿
+using Engine;
 using Engine.Data;
 using Game;
+using Gametest;
 using System.Numerics;
 
 namespace Object.Entity
@@ -45,6 +47,12 @@ namespace Object.Entity
             base.Tick(delta);
             if(!pickedup)
             {
+                if (CollisionDetections.RectVRect(GetRect(), GameClient.player.GetRect()))
+                {
+                    GameClient.player.inv.AddItem(itemid, 1, "nulldata");
+                    GameClient.DestroyObject(OBJID);
+                }
+
                 velocity.X /= 1 + odelta * 6;
                 EngineStructs.ECollisionResult collisionResult = CheckCollisions();
                 if (!collisionResult.collided)
@@ -54,7 +62,7 @@ namespace Object.Entity
                 }
                 else
                 {
-                    velocity.Y = 0;
+                    velocity.Y = -1;
                 }
             } 
         }

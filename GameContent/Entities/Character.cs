@@ -25,8 +25,8 @@ namespace Object.Entity
 
         public override void Tick(float delta)
         {
-            Move(_input, 0);
             base.Tick(delta);
+            Move(_input, 0);
         }
 
         public void AddMovementInput(float lr_input)
@@ -36,7 +36,7 @@ namespace Object.Entity
 
         private void Move(float inputX, float inputY)
         {
-            grounded = true;
+            grounded = false;
 
             velocity.X += (accel * inputX) * odelta;
             velocity.X = Math.Clamp(velocity.X, -speed, speed);
@@ -48,10 +48,12 @@ namespace Object.Entity
             
             EngineStructs.ECollisionResult cresult = CheckCollisions();
             velocity.Y += Game.GameProperties.gravity * gravitymult * odelta;
+            
             if (cresult.collided)
             {
                 grounded = true;
-                velocity += cresult.normal * new Vector2(Math.Abs(velocity.X), Math.Abs(velocity.Y)) * (1 - cresult.time);
+                //velocity += cresult.normal * new Vector2(Math.Abs(velocity.X), Math.Abs(velocity.Y)) * (1 - cresult.time);
+                velocity.Y = -1f;
                 return;
             }
         }
@@ -60,7 +62,7 @@ namespace Object.Entity
         {
             if(grounded)
             { 
-                velocity.Y = -250;
+                velocity.Y = -400;
             }
             
         }

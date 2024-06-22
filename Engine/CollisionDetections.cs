@@ -107,7 +107,7 @@ namespace Engine
             target_expanded.Y = target.Y - In.Size.Height / 2;
             target_expanded.Size = target.Size + In.Size;
 
-            Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Point, new PointF(new Vector2(In.X + In.Width / 2, In.Y + In.Height / 2)), new SizeF(16, 16), Color.Yellow));
+            //Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Point, new PointF(new Vector2(In.X + In.Width / 2, In.Y + In.Height / 2)), new SizeF(16, 16), Color.Yellow));
 
             if (RayVRect(new Ray(new Vector2(In.X + In.Size.Width / 2, In.Y + In.Size.Height / 2), Invel * elapsedtime), target_expanded, out contact_point, out contact_normal, out contact_time))
             {

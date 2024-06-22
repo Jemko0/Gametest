@@ -12,8 +12,9 @@ public class EPlayer : ECharacter
 {
     public GameInput InputManager = new GameInput();
     public Inventory inv = new Inventory();
-    public int selecteditem;
+    private int selecteditem;
     public Item helditem;
+    private bool canUse;
     private float _lr = 0;
     public override void Init()
     {
@@ -55,7 +56,7 @@ public class EPlayer : ECharacter
 
         if (InputManager.IsKeyDown(Keys.G))
         {
-            GameClient.RegisterObject(new Item("basepick", ID.ItemID.GetItem("basepick"), Position));
+            GameClient.RegisterObject(new Item("basepick", ID.ItemID.GetItem("basepick"), Position + new Vector2(100, 0)));
         }
 
         if (InputManager.IsKeyDown(Keys.Space) == true)
