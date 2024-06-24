@@ -90,10 +90,28 @@ namespace Engine.Data
     public static class EngineStructs
     {
         
-        public struct IntVector2(int x, int y)
+        public struct IntVector2
         {
-            public int x = x;
-            public int y = y;
+            public int x;
+            public int y;
+
+            public IntVector2(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
+
+            public IntVector2()
+            {
+                this.x = 0;
+                this.y = 0;
+            }
+
+            public IntVector2(Vector2 vector)
+            {
+                x = (int)vector.X;
+                y = (int)vector.Y;
+            }
         }
 
         public struct ECollisionResult()
@@ -155,10 +173,18 @@ namespace Engine.Data
             return (int)(Math.Round(a / gridsize) * gridsize);
         }
 
+
+
         public static Vector2 TileSnap(Vector2 a)
         {
             int gridsize = 32;
             return new Vector2((int)(Math.Round(a.X / gridsize) * gridsize), (int)(Math.Round(a.Y / gridsize) * gridsize));
+        }
+
+        public static EngineStructs.IntVector2 TileSnap(EngineStructs.IntVector2 a)
+        {
+            int gridsize = 32;
+            return new EngineStructs.IntVector2((int)(Math.Round((decimal)a.x / gridsize) * gridsize), (int)(Math.Round((decimal)a.y / gridsize) * gridsize));
         }
 
         public static float Lerp(float a, float b, float f)

@@ -45,14 +45,15 @@ namespace Object.Entity
         public override void Tick(float delta)
         {
             base.Tick(delta);
-            if(!pickedup)
-            {
-                if (CollisionDetections.RectVRect(GetRect(), GameClient.player.GetRect()))
-                {
-                    GameClient.player.inv.AddItem(itemid, 1, "nulldata");
-                    GameClient.DestroyObject(OBJID);
-                }
 
+            if (CollisionDetections.RectVRect(GetRect(), GameClient.player.GetRect()))
+            {
+                GameClient.player.inv.AddItem(itemid, 1, "nulldata");
+                GameClient.DestroyObject(OBJID);
+            }
+
+            if (!pickedup)
+            {
                 velocity.X /= 1 + odelta * 6;
                 EngineStructs.ECollisionResult collisionResult = CheckCollisions();
                 if (!collisionResult.collided)

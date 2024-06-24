@@ -1,10 +1,12 @@
 ﻿
 using Engine.Data;
+using Object.Entity;
+using System.Numerics;
 namespace Gametest.GameContent.World
 {
     public class Worldgen
     {
-        public static short size = 32;
+        public static short size = 128;
         public static int tilesize = 32;
         public static FastNoiseLite? noise;
         public static void Generate()
@@ -28,9 +30,12 @@ namespace Gametest.GameContent.World
             }
         }
 
-        public static void MineTile(int x, int y)
+        public static void MineTile(Vector2 WorldPos)
         {
-                GameClient.worldtiles.Remove(new EngineStructs.IntVector2(x - (int)GameClient.cam.position.X, y - (int)GameClient.cam.position.Y));
+            string val;
+            GameClient.worldtiles.TryGetValue(new EngineStructs.IntVector2(WorldPos), out val);
+            System.Diagnostics.Debug.WriteLine(val);
+            GameClient.worldtiles.Remove(new EngineStructs.IntVector2((int)WorldPos.X, (int)WorldPos.Y + 52));
         }
 
         public static void Setupnoise()

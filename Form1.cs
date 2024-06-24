@@ -49,23 +49,9 @@ namespace Gametest
             {
                 EngineLoop();
                 Invalidate(); //render
-                if (dtpos1 != Vector2.Zero && dtpos2 != Vector2.Zero)
-                {
-                    Vector2 cp;
-                    Vector2 cn;
-                    float t;
-
-                    Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Line, dtpos1, dtpos2, Color.Black));
-
-                    foreach(var tile in worldtiles)
-                    {
-                        if (CollisionDetections.RayVRect(new Ray(dtpos1, dtpos2 - dtpos1), new RectangleF(tile.Key.x, tile.Key.y, 32, 32), out cp, out cn, out t) && t < 1.0f)
-                        {
-                            Renderer.DrawDebugPoint(new DebugDrawing(DebugDrawingType.Rect, new RectangleF(tile.Key.x, tile.Key.y, 32, 32), Color.Red));
-                        }
-                    }
-                    
-                }
+#if DEBUG
+                Thread.Sleep(8);
+#endif
             }
         }
 
@@ -148,7 +134,8 @@ namespace Gametest
 
             if (e.Button == MouseButtons.Left)
             {
-                dtpos1 = EngineFunctions.ScreenToWorldCoordinates(e.Location);
+                System.Diagnostics.Debug.WriteLine("tile: " + EngineFunctions.TileSnap(EngineFunctions.ScreenToWorldCoordinates(e.Location)));
+                Worldgen.MineTile(EngineFunctions.TileSnap(EngineFunctions.ScreenToWorldCoordinates(e.Location)));
             }
 
             if (e.Button == MouseButtons.Right)
