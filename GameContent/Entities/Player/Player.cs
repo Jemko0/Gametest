@@ -1,9 +1,7 @@
 using Game;
 using Game.Global;
 using Gametest;
-using Engine.Data;
 using Gametest.GameContent.Gameplay;
-using Engine;
 using System.Numerics;
 
 namespace Object.Entity;

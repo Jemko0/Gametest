@@ -55,7 +55,7 @@ namespace Object.Entity
         public override void Tick(float delta)
         {
             base.Tick(delta);
-            active = GameClient.cam.PosInCamBounds(Position);
+            active = true; //GameClient.cam.PosInCamBounds(Position);
             ETickMovement();
         }
 

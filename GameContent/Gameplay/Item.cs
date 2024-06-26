@@ -10,7 +10,7 @@ namespace Object.Entity
     public class Item : EEntity
     {
         public string itemid;
-        public bool pickedup;
+        public bool pickedup = false;
         public ID.ItemID.ItemData itemdata;
 
         public Item(string _id, ID.ItemID.ItemData data, Vector2 pos)
@@ -46,14 +46,15 @@ namespace Object.Entity
         {
             base.Tick(delta);
 
-            if (CollisionDetections.RectVRect(GetRect(), GameClient.player.GetRect()))
-            {
-                GameClient.player.inv.AddItem(itemid, 1, "nulldata");
-                GameClient.DestroyObject(OBJID);
-            }
-
             if (!pickedup)
             {
+                if (CollisionDetections.RectVRect(GetRect(), GameClient.player.GetRect()))
+                {
+                    GameClient.player.inv.AddItem(itemid, 1, "nulldata");
+                    GameClient.DestroyObject(OBJID);
+                    return;
+                }
+
                 velocity.X /= 1 + odelta * 6;
                 EngineStructs.ECollisionResult collisionResult = CheckCollisions();
                 if (!collisionResult.collided)

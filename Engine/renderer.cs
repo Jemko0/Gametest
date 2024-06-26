@@ -17,6 +17,7 @@ namespace Engine
         public static PaintEventArgs e;
         public static int ro;
         public static Dictionary<string, Image> SPRTCACHE_TILES = new Dictionary<string, Image>();
+        public static Dictionary<EngineStructs.IntVector2, string> TILEBUFFER = new Dictionary<EngineStructs.IntVector2, string>();
         public static Dictionary<int, Image> SPRTCACHE_ENTITY = new Dictionary<int, Image>();
         public static List<DebugDrawing> DBG_BUFFER = new List<DebugDrawing>();
         public Renderer()
@@ -29,9 +30,11 @@ namespace Engine
             e = ee;
             int ro = 0;
             //actual render stuff
+            TileBounds();
             TilePass();
             ObjectPass();
             DebugPass();
+            UIPass();
             return ro;
         }
 
@@ -102,22 +105,47 @@ namespace Engine
             }
         }
 
+        private static void TileBounds()
+        {
+            TILEBUFFER.Clear();
+            foreach (var tile in GameClient.worldtiles)
+            {
+                if (GameClient.cam.PosInCamBounds(new System.Numerics.Vector2(tile.Key.x, tile.Key.y)))
+                {
+                    TILEBUFFER.Add(new EngineStructs.IntVector2(tile.Key.x, tile.Key.y), tile.Value);
+                }
+            }
+        }
+
         private static void TilePass()
         {
             ro++;
-            foreach (var tile in GameClient.worldtiles)
+            foreach (var tile in TILEBUFFER)
             {
-                if(GameClient.cam.PosInCamBounds(new System.Numerics.Vector2(tile.Key.x, tile.Key.y)))
+                if(SPRTCACHE_TILES.ContainsKey(tile.Value))
                 {
-                    if(SPRTCACHE_TILES.ContainsKey(tile.Value))
-                    {
                         e.Graphics.DrawImage(SPRTCACHE_TILES[tile.Value], new RectangleF(new PointF(EngineFunctions.GetRenderTranslation(new System.Numerics.Vector2((float)(tile.Key.x - Worldgen.tilesize / 3f), (float)(tile.Key.y - Worldgen.tilesize / 3f)), GameClient.cam)), new SizeF(32, 32)));
-                    }
-                    else
-                    {
-                        SPRTCACHE_TILES.Add(tile.Value, ID.TileID.GetTile(tile.Value).sprite);
-                    }
                 }
+                else
+                {
+                    SPRTCACHE_TILES.Add(tile.Value, ID.TileID.GetTile(tile.Value).sprite);
+                }
+            }
+        }
+
+        private static void UIPass()
+        {
+            UInv();
+        }
+
+        private static void UInv()
+        {
+            var items = GameClient.player.inv.items;
+            
+            for(int i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                e.Graphics.DrawImage(ID.ItemID.GetItem(item.id).sprite, 32 + (i * 64), 32, 48, 48);
             }
         }
     }

@@ -41,7 +41,7 @@ namespace Gametest.GameContent.World
         public static void Setupnoise()
         {
             noise = new FastNoiseLite();
-            noise.SetSeed(69);
+            noise.SetSeed(69420);
             noise.SetFractalType(FastNoiseLite.FractalType.FBm);
             noise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
             noise.SetFrequency(0.001f);

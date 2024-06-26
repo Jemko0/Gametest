@@ -189,8 +189,7 @@ namespace Engine.Data
 
         public static float Lerp(float a, float b, float f)
         {
-            float min;
-            float max;
+            float min, max;
 
             min = Math.Min(a, b);
             max = Math.Max(a, b);

@@ -51,13 +51,13 @@ namespace Object.Entity
             
             if (cresult.collided)
             {
-                bool ignoreXblock;
+                bool ignoreXblock = false;
                 
 
                 if (cresult.normal == new Vector2(0, -1))
                 {
                     grounded = true;
-                    Position.Y = cresult.location.Y - 30;
+                    Position.Y = cresult.location.Y - 24;
                     velocity.Y = 0;
                     ignoreXblock = true;
                 }
@@ -68,7 +68,10 @@ namespace Object.Entity
                 
                 velocity.Y = cresult.normal.Y;
                 
-                //velocity += cresult.normal * new Vector2(Math.Abs(velocity.X), Math.Abs(velocity.Y)) * (1 - cresult.time);
+                //velocity += cresult.normal *
+                //
+                //
+                //Vector2(Math.Abs(velocity.X), Math.Abs(velocity.Y)) * (1 - cresult.time);
             }
         }
 

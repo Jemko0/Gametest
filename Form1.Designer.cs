@@ -55,14 +55,6 @@ namespace Gametest
             imageList1.ImageSize = new Size(16, 16);
             imageList1.TransparentColor = Color.Transparent;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Location = new Point(12, 12);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(593, 90);
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
             // 
             // GameClient
             // 

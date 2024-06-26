@@ -58,7 +58,7 @@ namespace Game
                 public Image sprite;
             }
 
-            public static ItemData GetItem(string ItemID)
+            public static ItemData GetItem(string ItemID, bool createClass = false)
             {
                 ItemData i = new ItemData();
 
@@ -73,7 +73,10 @@ namespace Game
                         i.name = "basepick";
                         i.tooltip = "base";
                         i.sprite = Resources.itempickbase;
-                        i._class = new Item("basepick", i);
+                        if(createClass)
+                        {
+                            i._class = new Item("basepick", i);
+                        }
                         return i;
                 }
             }
